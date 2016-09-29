@@ -1,11 +1,8 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import Screens.PlayScreen;
-import Screens.Ranking;
-import Screens.ScreenUs03;
+
+import Screens.ScreenUs07Jogo;
 
 public class DevBilac extends Game {
 	public static final int V_WIDHT = 400;
@@ -18,7 +15,8 @@ public class DevBilac extends Game {
 		batch = new SpriteBatch();
 		//setScreen(new PlayScreen(this));
 		//setScreen(new Ranking(this));
-		setScreen(new ScreenUs03(this));
+		//setScreen(new ScreenUs03(this));
+		setScreen(new ScreenUs07Jogo(this));
 		
 	}
 
