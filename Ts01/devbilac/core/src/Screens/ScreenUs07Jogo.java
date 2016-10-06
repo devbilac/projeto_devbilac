@@ -2,7 +2,10 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs03;
+import Sprites.Objeto;
 
 //Tela destinada ao Jogo da User Story 07.
 public class ScreenUs07Jogo implements Screen {
@@ -22,9 +26,11 @@ public class ScreenUs07Jogo implements Screen {
 	Vector3 touchPos;
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
-	
+	float positionX;
+	Texture fundo;
 	
 	public ScreenUs07Jogo(DevBilac game){
+		fundo = new Texture("images/fundo.jpg");
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
 		tamanhoOriginalH = Gdx.graphics.getHeight();
 		tamanhoOriginalW = Gdx.graphics.getWidth();
@@ -37,6 +43,7 @@ public class ScreenUs07Jogo implements Screen {
 		gamePort = new FitViewport(DevBilac.V_WIDHT / DevBilac.PPM,DevBilac.V_HEIGHT / DevBilac.PPM,gamecam);
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2,0);
 		
+		
 	}
 	@Override
 	public void show() {
@@ -44,15 +51,31 @@ public class ScreenUs07Jogo implements Screen {
 		
 	}
 
+	public void handleInput(float delta){
+		if(Gdx.input.isKeyPressed(Keys.M)){
+			if(positionX >=0){
+				positionX = -(fundo.getHeight());
+			}else{positionX = 0;}
+		}
+	}
+	public void update(float delta){
+		handleInput(delta);
+	}
+	
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		update(delta);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		batch.draw(new Texture("images/fundo.jpg"),positionX,0);
+		batch.end();
 		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		gamePort.update(width, height);
 		
 	}
 
