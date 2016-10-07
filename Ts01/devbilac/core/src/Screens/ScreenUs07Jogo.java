@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs03;
+import Sprites.BarraLateral;
 import Sprites.Objeto;
 
 //Tela destinada ao Jogo da User Story 07.
@@ -26,11 +27,8 @@ public class ScreenUs07Jogo implements Screen {
 	Vector3 touchPos;
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
-	float positionX;
-	Texture fundo;
-	
+	BarraLateral BarraLateral;
 	public ScreenUs07Jogo(DevBilac game){
-		fundo = new Texture("images/fundo.jpg");
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
 		tamanhoOriginalH = Gdx.graphics.getHeight();
 		tamanhoOriginalW = Gdx.graphics.getWidth();
@@ -42,6 +40,11 @@ public class ScreenUs07Jogo implements Screen {
 		//o 'Metodo' FitViewport faz o redimencionamento de tela.
 		gamePort = new FitViewport(DevBilac.V_WIDHT / DevBilac.PPM,DevBilac.V_HEIGHT / DevBilac.PPM,gamecam);
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2,0);
+		BarraLateral = new BarraLateral();
+		BarraLateral.setTexture(new Texture("images/fundo.jpg"));
+		BarraLateral.setEstrutura("");
+		BarraLateral.setPosition(new Vector3(0,0,0));
+		BarraLateral.setAtivo(false);
 		
 		
 	}
@@ -52,11 +55,7 @@ public class ScreenUs07Jogo implements Screen {
 	}
 
 	public void handleInput(float delta){
-		if(Gdx.input.isKeyPressed(Keys.M)){
-			if(positionX >=0){
-				positionX = -(fundo.getHeight());
-			}else{positionX = 0;}
-		}
+		BarraAcao();
 	}
 	public void update(float delta){
 		handleInput(delta);
@@ -68,7 +67,7 @@ public class ScreenUs07Jogo implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(new Texture("images/fundo.jpg"),positionX,0);
+		batch.draw(BarraLateral.getTexture(),BarraLateral.getPosition().x, BarraLateral.getPosition().y);
 		batch.end();
 		
 	}
@@ -120,4 +119,21 @@ public class ScreenUs07Jogo implements Screen {
 	        }
 			return PositionM;
 		}
+		
+	public void BarraAcao(){
+		if(Gdx.input.isKeyPressed(Keys.M)){
+			if (BarraLateral.isAtivo()){
+				
+				BarraLateral.setAtivo(false);
+				float Aux01 = BarraLateral.getPosition().x-BarraLateral.getTexture().getWidth();
+				BarraLateral.setPosition(new Vector3(Aux01,BarraLateral.getPosition().y,0));
+				
+				
+			}else{
+				BarraLateral.setAtivo(true);
+				BarraLateral.setPosition(new Vector3(0,BarraLateral.getPosition().y,0));
+				
+			}
+		}
+	}
 }
