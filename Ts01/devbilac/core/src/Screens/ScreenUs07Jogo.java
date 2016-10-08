@@ -26,6 +26,7 @@ public class ScreenUs07Jogo implements Screen {
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
 	private SpriteBatch batch;
+	private Circulo circulos;
 	Vector3 touchPos;
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
@@ -44,7 +45,7 @@ public class ScreenUs07Jogo implements Screen {
 		tamanhoOriginalW = Gdx.graphics.getWidth();
 		touchPos = new Vector3();
 		batch = new SpriteBatch();
-		// Chama o HudRanking que é um 'Display' na tela, onde ficas Labels.
+		// Chama o HudRanking que Ã© um 'Display' na tela, onde ficas Labels.
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		//o 'Metodo' FitViewport faz o redimencionamento de tela.
@@ -60,6 +61,7 @@ public class ScreenUs07Jogo implements Screen {
 		botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
 		botao.setAtivo(true);
 		currentFont = new BitmapFont();
+		criaCirculo();
 		estrutura = ""
 				+ "Se(bolinha = true){ "
 				+ "\nganha +1"
@@ -69,6 +71,14 @@ public class ScreenUs07Jogo implements Screen {
 				+ "\n"
 				+ "\n}";
 	}
+	
+	private void criaCirculo() {
+		String img = "assets\\circulo.png";
+		float x = 100;
+		float y = 300;
+		circulos = new Circulo(img, Tipo.BOOLEAN, x, y);
+	}
+	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -129,7 +139,7 @@ public class ScreenUs07Jogo implements Screen {
 		
 	}
 
-	//Metodo Utilizado para pegar as Posições X,Y do Mouse e tratalas adequadamente.
+	//Metodo Utilizado para pegar as PosiÃ§Ãµes X,Y do Mouse e tratalas adequadamente.
 		public Vector3 PositionMouse(){
 			Vector3 PositionM = new Vector3();
 			touchPos.set(0,Gdx.input.getY(), 0);
