@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,6 +16,7 @@ import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs03;
 import Sprites.BarraLateral;
+import Sprites.Botao;
 import Sprites.Objeto;
 
 //Tela destinada ao Jogo da User Story 07.
@@ -28,6 +30,14 @@ public class ScreenUs07Jogo implements Screen {
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
 	BarraLateral BarraLateral;
+	Botao botao;
+	int Clicked;
+	boolean ClickedBotao;
+	Vector3 AuxV01;
+	private BitmapFont currentFont;
+	String estrutura;
+	
+	
 	public ScreenUs07Jogo(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
 		tamanhoOriginalH = Gdx.graphics.getHeight();
@@ -44,9 +54,20 @@ public class ScreenUs07Jogo implements Screen {
 		BarraLateral.setTexture(new Texture("images/fundo.jpg"));
 		BarraLateral.setEstrutura("");
 		BarraLateral.setPosition(new Vector3(0,0,0));
-		BarraLateral.setAtivo(false);
-		
-		
+		BarraLateral.setAtivo(true);
+		botao = new Botao();
+		botao.setTexture(new Texture("images/botao.jpg"));
+		botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
+		botao.setAtivo(true);
+		currentFont = new BitmapFont();
+		estrutura = ""
+				+ "Se(bolinha = true){ "
+				+ "\nganha +1"
+				+ "\n"
+				+ "\n}senao{"
+				+ "\nperde 1 ponto"
+				+ "\n"
+				+ "\n}";
 	}
 	@Override
 	public void show() {
@@ -66,8 +87,14 @@ public class ScreenUs07Jogo implements Screen {
 		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		batch.begin();
-		batch.draw(BarraLateral.getTexture(),BarraLateral.getPosition().x, BarraLateral.getPosition().y);
+		
+		if(BarraLateral.isAtivo()){
+			batch.draw(BarraLateral.getTexture(),BarraLateral.getPosition().x, BarraLateral.getPosition().y);
+			currentFont.draw(batch,estrutura, 20, 450);
+		}
+		batch.draw(botao.getTexture(),botao.getPosition().x,botao.getPosition().y);
 		batch.end();
 		
 	}
@@ -98,7 +125,7 @@ public class ScreenUs07Jogo implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		currentFont.dispose();
 		
 	}
 
@@ -117,23 +144,51 @@ public class ScreenUs07Jogo implements Screen {
 	       	 touchPos.set(Gdx.input.getX(),Gdx.input.getY(), 0);
 	       	 gamecam.unproject(touchPos);
 	        }
+	        System.out.println(PositionM);
 			return PositionM;
 		}
 		
 	public void BarraAcao(){
-		if(Gdx.input.isKeyPressed(Keys.M)){
-			if (BarraLateral.isAtivo()){
-				
-				BarraLateral.setAtivo(false);
-				float Aux01 = BarraLateral.getPosition().x-BarraLateral.getTexture().getWidth();
-				BarraLateral.setPosition(new Vector3(Aux01,BarraLateral.getPosition().y,0));
-				
-				
+		
+		
+		if(Gdx.input.isTouched()){
+			if(Clicked == 1){
+				AuxV01 = PositionMouse();
+					//Verifica se o Mouse esta dentro do Objeto.
+					System.out.println(AuxV01);
+					if (AuxV01.x >= botao.getPosition().x && AuxV01.x <= (botao.getPosition().x + botao.getTexture().getWidth())){
+						if (AuxV01.y >= botao.getPosition().y && AuxV01.y <= (botao.getPosition().y + botao.getTexture().getHeight())){
+							System.out.println("Clicou Dentro");
+							ClickedBotao = true;
+						}
+						
+					}
 			}else{
-				BarraLateral.setAtivo(true);
-				BarraLateral.setPosition(new Vector3(0,BarraLateral.getPosition().y,0));
-				
+				if(ClickedBotao == true){
+					if (BarraLateral.isAtivo()){
+						System.out.println("Desativar!!");
+						BarraLateral.setAtivo(false);
+						botao.setAtivo(false);
+						float Aux01 = BarraLateral.getPosition().x-BarraLateral.getTexture().getWidth();
+						BarraLateral.setPosition(new Vector3(Aux01,BarraLateral.getPosition().y,0));
+						botao.setPosition(new Vector3(0,500,0));
+						
+						
+					}else{
+						System.out.println("Ativar!!");
+						BarraLateral.setAtivo(true);
+						botao.setAtivo(true);
+						BarraLateral.setPosition(new Vector3(0,BarraLateral.getPosition().y,0));
+						botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
+						
+					}	
+					Clicked = 0;
+				}
 			}
-		}
+			Clicked++;
+
+		}else{Clicked=0;
+		ClickedBotao = false;}
 	}
+	
 }
