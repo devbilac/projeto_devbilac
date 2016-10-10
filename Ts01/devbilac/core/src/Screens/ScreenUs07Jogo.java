@@ -18,6 +18,7 @@ import Scenes.HudUs03;
 import Sprites.BarraLateral;
 import Sprites.Botao;
 import Sprites.Objeto;
+import Sprites.Circulo;
 
 //Tela destinada ao Jogo da User Story 07.
 public class ScreenUs07Jogo implements Screen {
@@ -74,9 +75,13 @@ public class ScreenUs07Jogo implements Screen {
 	
 	private void criaCirculo() {
 		String img = "assets\\circulo.png";
-		float x = 100;
+		float x = 400;
 		float y = 300;
-		circulos = new Circulo(img, Tipo.BOOLEAN, x, y);
+		circulos = new Circulo();
+		circulos.setTexture(new Texture("images/circulo.png"));
+		circulos.setTipo(1);
+		circulos.setPosition(new Vector3(x,y,0));
+		circulos.setMensagem("SOU AZUL");
 	}
 	
 	@Override
@@ -95,7 +100,7 @@ public class ScreenUs07Jogo implements Screen {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
@@ -105,6 +110,8 @@ public class ScreenUs07Jogo implements Screen {
 			currentFont.draw(batch,estrutura, 20, 450);
 		}
 		batch.draw(botao.getTexture(),botao.getPosition().x,botao.getPosition().y);
+		batch.draw(circulos.getTexture(),circulos.getPosition().x,circulos.getPosition().y);
+		circulos.getFont().draw(batch, circulos.getMsg(), circulos.getMsgX(), circulos.getMsgY());
 		batch.end();
 		
 	}
