@@ -1,6 +1,7 @@
 package Screens;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -42,9 +43,7 @@ public class ScreenUs07 implements Screen {
 	Vector3 AuxV01;
 	private BitmapFont currentFont;
 	String estrutura;
-	Vector3 positions[] = {
-			new Vector3(50,900,0),new Vector3(550,900,0),new Vector3(1050,900,0),
-	};
+	
 	
 	public ScreenUs07(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
@@ -79,6 +78,10 @@ public class ScreenUs07 implements Screen {
 				+ "\nperde 1 ponto"
 				+ "\n"
 				+ "\n}";
+		
+		circulos.add(criaCirculo());
+		circulos.add(criaCirculo());
+		circulos.add(criaCirculo());
 	}
 	
 	@Override
@@ -216,22 +219,40 @@ public class ScreenUs07 implements Screen {
 	private Circulo criaCirculo() {
 		String img = "assets\\circulo.png";
 		Circulo circulo = new Circulo();
-
-		//Gerar Posição Aleatoria - circulo.setPosition(new Vector3(400,300,0));
-		//Metodo de Gerar Pergunta  - circulo.setMensagem("SOU AZUL");
-		//Metodo de Gerar V ou F - circulo.setResposta(true);
-		//Metodo de gerar cor aleatoria - circulo.setTexture(new Texture("images/circulo.png"));
+		circulo.setAtivo(true);
+		circulo.setPosition(gerarPosition());
+		circulo = gerarVisual(circulo);
+		circulo = gerarQuestao(circulo);
 		
 		
 		return circulo;
 	}
-	
-	public Circulo gerarPergunta(){
-		Circulo circulo = new Circulo();
+	public Vector3 gerarPosition(){
+		Vector3 positions[] = {
+				new Vector3(50,400,0),new Vector3(550,400,0),new Vector3(1050,400,0),
+		};
+		Random gerador = new Random();
+		int aux = gerador.nextInt(positions.length);
+		Vector3 newPosition = new Vector3(positions[aux].x,positions[aux].y,positions[aux].z);
 		
-		circulo.setMensagem("");
-		circulo.setResposta(true);
-		circulo.setResposta(false);
+		return newPosition;
+	}
+	public Circulo gerarQuestao(Circulo oldCirculo){
+		Circulo circulo = oldCirculo;
+		String questao[][] = {{"2+2=4","true"},{"2+2=8","false"},{"2+5=9","false"},{"2+3=5","true"}};
+		Random gerador = new Random();
+		int aux = gerador.nextInt(questao.length);
+		circulo.setMensagem(questao[aux][0]);
+		circulo.setResposta(Boolean.getBoolean(questao[aux][1]));
+		return circulo;
+	}
+	
+	public Circulo gerarVisual(Circulo oldCirculo){
+		Circulo circulo = oldCirculo;
+		Random gerador = new Random();
+		String cores[] = {"vazio","azul","roxo","verde","vermelho"};
+		int aux = gerador.nextInt(cores.length);
+		circulo.setTexture(new Texture("images/circulo0"+aux+".png"));
 		
 		return circulo;
 	}
