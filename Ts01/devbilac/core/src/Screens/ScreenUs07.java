@@ -1,5 +1,7 @@
 package Screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
@@ -15,19 +17,21 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs03;
+import Scenes.HudUs07;
 import Sprites.BarraLateral;
 import Sprites.Botao;
 import Sprites.Objeto;
 import Sprites.Circulo;
 
 //Tela destinada ao Jogo da User Story 07.
-public class ScreenUs07Jogo implements Screen {
+public class ScreenUs07 implements Screen {
+	private HudUs07 hud;
 	private World world;
 	private DevBilac game;
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
 	private SpriteBatch batch;
-	private Circulo circulos;
+	ArrayList<Circulo> circulos = new ArrayList<Circulo>();
 	Vector3 touchPos;
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
@@ -38,9 +42,11 @@ public class ScreenUs07Jogo implements Screen {
 	Vector3 AuxV01;
 	private BitmapFont currentFont;
 	String estrutura;
+	Vector3 positions[] = {
+			new Vector3(50,900,0),new Vector3(550,900,0),new Vector3(1050,900,0),
+	};
 	
-	
-	public ScreenUs07Jogo(DevBilac game){
+	public ScreenUs07(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
 		tamanhoOriginalH = Gdx.graphics.getHeight();
 		tamanhoOriginalW = Gdx.graphics.getWidth();
@@ -62,6 +68,8 @@ public class ScreenUs07Jogo implements Screen {
 		botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
 		botao.setAtivo(true);
 		currentFont = new BitmapFont();
+		hud = new HudUs07(game.batch); 
+		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
 		criaCirculo();
 		estrutura = ""
 				+ "Se(bolinha = true){ "
@@ -71,17 +79,6 @@ public class ScreenUs07Jogo implements Screen {
 				+ "\nperde 1 ponto"
 				+ "\n"
 				+ "\n}";
-	}
-	
-	private void criaCirculo() {
-		String img = "assets\\circulo.png";
-		float x = 400;
-		float y = 300;
-		circulos = new Circulo();
-		circulos.setTexture(new Texture("images/circulo.png"));
-		circulos.setTipo(1);
-		circulos.setPosition(new Vector3(x,y,0));
-		circulos.setMensagem("SOU AZUL");
 	}
 	
 	@Override
@@ -102,7 +99,7 @@ public class ScreenUs07Jogo implements Screen {
 		update(delta);
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+		hud.stage.draw(); 
 		batch.begin();
 		
 		if(BarraLateral.isAtivo()){
@@ -110,8 +107,16 @@ public class ScreenUs07Jogo implements Screen {
 			currentFont.draw(batch,estrutura, 20, 450);
 		}
 		batch.draw(botao.getTexture(),botao.getPosition().x,botao.getPosition().y);
-		batch.draw(circulos.getTexture(),circulos.getPosition().x,circulos.getPosition().y);
-		circulos.getFont().draw(batch, circulos.getMsg(), circulos.getMsgX(), circulos.getMsgY());
+		
+		//Bloco de codigo que roda o Array para desenhar os Objetos
+				for (Circulo circulo : circulos) {
+					if(circulo.isAtivo()){
+						batch.draw(circulo.getTexture(),circulo.getPosition().x,circulo.getPosition().y);
+						circulo.getFont().draw(batch, circulo.getMsg(), circulo.getMsgX(), circulo.getMsgY());
+					}
+				}
+				
+				
 		batch.end();
 		
 	}
@@ -208,4 +213,26 @@ public class ScreenUs07Jogo implements Screen {
 		ClickedBotao = false;}
 	}
 	
+	private Circulo criaCirculo() {
+		String img = "assets\\circulo.png";
+		Circulo circulo = new Circulo();
+
+		//Gerar Posição Aleatoria - circulo.setPosition(new Vector3(400,300,0));
+		//Metodo de Gerar Pergunta  - circulo.setMensagem("SOU AZUL");
+		//Metodo de Gerar V ou F - circulo.setResposta(true);
+		//Metodo de gerar cor aleatoria - circulo.setTexture(new Texture("images/circulo.png"));
+		
+		
+		return circulo;
+	}
+	
+	public Circulo gerarPergunta(){
+		Circulo circulo = new Circulo();
+		
+		circulo.setMensagem("");
+		circulo.setResposta(true);
+		circulo.setResposta(false);
+		
+		return circulo;
+	}
 }
