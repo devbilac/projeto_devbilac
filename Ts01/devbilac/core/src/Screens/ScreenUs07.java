@@ -48,7 +48,9 @@ public class ScreenUs07 implements Screen {
 	String estrutura;
 	boolean jogoPausado;
 	int gravarId;
-	
+	float milesimos;
+	int segundos;
+	boolean luz[] = {false,false,false};
 	
 	public ScreenUs07(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
@@ -160,8 +162,43 @@ public class ScreenUs07 implements Screen {
 					}
 				}
 				
-				batch.draw(new Texture("images\\inativo.png"),90,20);
-				batch.draw(new Texture("images\\inativo.png"),90,60);
+				
+				if(luz[0]){
+					batch.draw(new Texture("images\\ativo.png"),1100,570);
+					milesimos += delta;
+					if(milesimos >= 0.5){
+							segundos--;
+							luz[0] = false;
+							System.out.println("desligando luz");
+							milesimos = 0;
+						
+					}
+				}else{batch.draw(new Texture("images\\inativo.png"),1100,570);}
+				currentFont.draw(batch,"IF", 1150, 590);
+				
+				if(luz[1]){
+					batch.draw(new Texture("images\\ativo.png"),1100,520);
+					milesimos += delta;
+					if(milesimos >= 0.5){
+							segundos--;
+							luz[1] = false;
+							milesimos = 0;
+						
+					}
+				}else{batch.draw(new Texture("images\\inativo.png"),1100,520);}
+				currentFont.draw(batch,"ElseIf", 1150, 540);
+				
+				if(luz[2]){
+					batch.draw(new Texture("images\\ativo.png"),1100,470);
+					milesimos += delta;
+					if(milesimos >= 0.5){
+							segundos--;
+							luz[2] = false;
+							milesimos = 0;
+						
+					}
+				}else{batch.draw(new Texture("images\\inativo.png"),1100,470);}
+				currentFont.draw(batch,"Else", 1150, 490);
 		batch.end();
 		
 	}
@@ -283,10 +320,12 @@ public class ScreenUs07 implements Screen {
 					if(ClickedCirculo == true && auxRemove == gravarId){
 					  	if(circulos.get(auxRemove).isResposta() == true){
 							Pontuar(2);
+							luz[0] = true;
 							//Ligar Luz VERDE
 							//IF VEZES SEGUIDAS, LIGAR ELSE
 					  	}else{
-							Pontuar(1);
+							Pontuar(-1);
+							luz[2] = true;
 							//Ligar Luz VERMELHA
 					  	}
 						circulos.remove(circulos.get(auxRemove));
