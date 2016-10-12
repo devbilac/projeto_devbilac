@@ -2,6 +2,7 @@ package Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class Circulo extends Objeto{
@@ -17,6 +18,9 @@ public class Circulo extends Objeto{
 		this.font = new BitmapFont(Gdx.files.internal("images\\font.fnt"), false);
 	}
 	
+	public void update(float dt){
+		setPosition(new Vector3(getPosition().x,getPosition().y -2,0));
+	}
 	public void setMensagem(String Mensagem){
 		this.msg = Mensagem;
 		setMsg(this.msg);

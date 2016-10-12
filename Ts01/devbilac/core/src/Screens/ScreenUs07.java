@@ -101,6 +101,11 @@ public class ScreenUs07 implements Screen {
 	}
 	public void update(float delta){
 		handleInput(delta);
+		for (Circulo circulo : circulos) {
+			if(circulo.isAtivo()){
+				circulo.update(delta);
+			}
+		}
 	}
 	
 	@Override
