@@ -2,6 +2,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import Screens.PlayScreen;
 import Screens.ScreenUs07;
 
 public class DevBilac extends Game {
