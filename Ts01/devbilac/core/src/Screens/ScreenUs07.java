@@ -42,10 +42,12 @@ public class ScreenUs07 implements Screen {
 	Botao botao;
 	int Clicked;
 	boolean ClickedBotao;
+	boolean ClickedCirculo;
 	Vector3 AuxV01;
 	private BitmapFont currentFont;
 	String estrutura;
 	boolean jogoPausado;
+	int gravarId;
 	
 	
 	public ScreenUs07(DevBilac game){
@@ -85,9 +87,7 @@ public class ScreenUs07 implements Screen {
 				+ "\n"
 				+ "\n}";
 		jogoPausado = true;
-		circulos.add(criaCirculo(false));
-		circulos.add(criaCirculo(false));
-		circulos.add(criaCirculo(false));
+		criarCirculo(false);
 	}
 	
 	@Override
@@ -111,32 +111,31 @@ public class ScreenUs07 implements Screen {
 		}
 		//Remove Circulos que sairam da Tela
 		int removeu = 0;
-		int x = 1;
-		for (Circulo circulo : circulos) {
-			double aux = circulo.getPosition().y+circulo.getTexture().getHeight();
+		for (int i = 0; i < circulos.size(); i++) {
+			double aux = circulos.get(i).getPosition().y;
 			if(aux <= 0){
-				circulos.remove(circulo);
+				circulos.remove(circulos.get(i));
 				removeu++;
-				System.out.println("removeu "+removeu);
 			}
-			x++;
 		}
 		//Adiciona se removeu 1
-		if(removeu >=1){
 			for (int i = 0; i < removeu; i++) {
-				circulos.add(criaCirculo(true));
+				//circulos.add(criaCirculo(true));
 				System.out.println("add");
 			}
-		}
 		//Se Acabou o Jogo, aparece um AVISO e limpa o Array de Circulos.
 		if(acabouJogo()){
-			x = 1;
-			for (Circulo circulo : circulos) {
-					circulos.remove(circulo);
+			for (int i = 0; i < circulos.size(); i++) {
+					circulos.remove(circulos.get(i));
 			}
 			System.out.println("JOGO ACABOU, CIRCULOS REMOVIDOS");
-			x++;
 		}
+		
+		
+		
+		
+		CirculoAcao();
+		
 	}
 	
 	@Override
@@ -161,7 +160,8 @@ public class ScreenUs07 implements Screen {
 					}
 				}
 				
-				
+				batch.draw(new Texture("images\\inativo.png"),90,20);
+				batch.draw(new Texture("images\\inativo.png"),90,60);
 		batch.end();
 		
 	}
@@ -218,7 +218,7 @@ public class ScreenUs07 implements Screen {
 	public void BarraAcao(){
 		
 		
-		if(Gdx.input.isTouched()){
+		if(Gdx.input.isTouched() && acabouJogo() == false){
 			if(Clicked == 1){
 				AuxV01 = PositionMouse();
 					//Verifica se o Mouse esta dentro do Objeto.
@@ -227,6 +227,7 @@ public class ScreenUs07 implements Screen {
 						if (AuxV01.y >= botao.getPosition().y && AuxV01.y <= (botao.getPosition().y + botao.getTexture().getHeight())){
 							System.out.println("Clicou Dentro");
 							ClickedBotao = true;
+							Clicked++;
 						}
 						
 					}
@@ -249,25 +250,69 @@ public class ScreenUs07 implements Screen {
 						botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
 						setViewCirculo(false);
 						jogoPausado = true;
-					}	
-					Clicked = 0;
-				}
+					}
+					ClickedBotao = false;
+				}else{Clicked++;}
 			}
-			Clicked++;
+			
 
-		}else{Clicked=0;
-		ClickedBotao = false;}
+		}else{Clicked = 0;
+		}
 	}
 	
-	public Circulo criaCirculo(boolean Ativo) {
-		Circulo circulo = new Circulo();
-		circulo.setAtivo(Ativo);
-		circulo.setPosition(gerarPosition());
-		circulo = gerarVisual(circulo);
-		circulo = gerarQuestao(circulo);
-		
-		
-		return circulo;
+	
+	public void CirculoAcao(){
+		if(Gdx.input.isTouched() && acabouJogo() == false){
+			int auxRemove = 0;
+			for (Circulo circulo : circulos) {
+				
+				if(Clicked == 1){
+					AuxV01 = PositionMouse();
+					//Verifica se o Mouse esta dentro do Objeto.
+					System.out.println(AuxV01);
+					if (AuxV01.x >= circulo.getPosition().x && AuxV01.x <= (circulo.getPosition().x + circulo.getTexture().getWidth())){
+						if (AuxV01.y >= circulo.getPosition().y && AuxV01.y <= (circulo.getPosition().y + circulo.getTexture().getHeight())){
+							System.out.println("Clicou Dentro");
+							ClickedCirculo = true;
+							System.out.println(circulo.isResposta());
+							Clicked++;
+							gravarId=auxRemove;
+						}	
+					}
+				}else{
+					if(ClickedCirculo == true && auxRemove == gravarId){
+					  	if(circulos.get(auxRemove).isResposta() == true){
+							Pontuar(2);
+							//Ligar Luz VERDE
+							//IF VEZES SEGUIDAS, LIGAR ELSE
+					  	}else{
+							Pontuar(1);
+							//Ligar Luz VERMELHA
+					  	}
+						circulos.remove(circulos.get(auxRemove));
+						ClickedCirculo = false;
+						break;
+					}else{Clicked++;}
+				}
+				auxRemove++;
+			}
+		}else{
+			Clicked = 0;
+		}
+	}
+	
+	
+	public void criarCirculo(boolean Ativo) {
+		int limiteCirculos = 3;
+		for (int i = 0; i < limiteCirculos; i++) {
+			Circulo circulo = new Circulo();
+			circulo.setId(i);
+			circulo.setAtivo(Ativo);
+			circulo.setPosition(gerarPosition());
+			circulo = gerarVisual(circulo);
+			circulo = gerarQuestao(circulo);
+			circulos.add(circulo);
+		}
 	}
 	
 	public void setViewCirculo(boolean estado){
@@ -288,11 +333,14 @@ public class ScreenUs07 implements Screen {
 	}
 	public Circulo gerarQuestao(Circulo oldCirculo){
 		Circulo circulo = oldCirculo;
-		String questao[][] = {{"2+2=4","true"},{"2+2=8","false"},{"2+5=9","false"},{"2+3=5","true"}};
+		String questao[]= {"2+2=4","2+2=8","2+5=9","2+3=5"};
+		Boolean resposta[] = {true,false,false,true};
 		Random gerador = new Random();
 		int aux = gerador.nextInt(questao.length);
-		circulo.setMensagem(questao[aux][0]);
-		circulo.setResposta(Boolean.getBoolean(questao[aux][1]));
+		circulo.setMensagem(questao[aux]);
+		circulo.setResposta(resposta[aux]);
+		System.out.println(circulo.getMsg());
+		System.out.println(resposta[aux]);
 		return circulo;
 	}
 	
