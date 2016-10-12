@@ -208,7 +208,7 @@ public class ScreenUs07 implements Screen {
 						float Aux01 = BarraLateral.getPosition().x-BarraLateral.getTexture().getWidth();
 						BarraLateral.setPosition(new Vector3(Aux01,BarraLateral.getPosition().y,0));
 						botao.setPosition(new Vector3(0,500,0));
-						
+						setViewCirculo(true);
 						
 					}else{
 						System.out.println("Ativar!!");
@@ -216,7 +216,7 @@ public class ScreenUs07 implements Screen {
 						botao.setAtivo(true);
 						BarraLateral.setPosition(new Vector3(0,BarraLateral.getPosition().y,0));
 						botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
-						
+						setViewCirculo(false);
 					}	
 					Clicked = 0;
 				}
@@ -227,9 +227,9 @@ public class ScreenUs07 implements Screen {
 		ClickedBotao = false;}
 	}
 	
-	private Circulo criaCirculo() {
+	public Circulo criaCirculo() {
 		Circulo circulo = new Circulo();
-		circulo.setAtivo(true);
+		circulo.setAtivo(false);
 		circulo.setPosition(gerarPosition());
 		circulo = gerarVisual(circulo);
 		circulo = gerarQuestao(circulo);
@@ -237,6 +237,13 @@ public class ScreenUs07 implements Screen {
 		
 		return circulo;
 	}
+	
+	public void setViewCirculo(boolean estado){
+		for (Circulo circulo : circulos) {
+			circulo.setAtivo(estado);
+		}
+	}
+	
 	public Vector3 gerarPosition(){
 		Vector3 positions[] = {
 				new Vector3(50,400,0),new Vector3(550,400,0),new Vector3(1050,400,0),

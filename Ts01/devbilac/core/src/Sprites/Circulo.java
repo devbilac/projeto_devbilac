@@ -19,7 +19,12 @@ public class Circulo extends Objeto{
 	}
 	
 	public void update(float dt){
+		//Parte que configura o sistema de 'Gravidade' dos Circulos.
 		setPosition(new Vector3(getPosition().x,getPosition().y -2,0));
+		//Configura o Texto para seguir o Circulo.
+		congfigPosMsgX();
+		congfigPosMsgY();
+		
 	}
 	public void setMensagem(String Mensagem){
 		this.msg = Mensagem;
