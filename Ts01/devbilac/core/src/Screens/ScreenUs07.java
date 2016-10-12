@@ -45,6 +45,7 @@ public class ScreenUs07 implements Screen {
 	Vector3 AuxV01;
 	private BitmapFont currentFont;
 	String estrutura;
+	boolean jogoPausado;
 	
 	
 	public ScreenUs07(DevBilac game){
@@ -75,7 +76,6 @@ public class ScreenUs07 implements Screen {
 		currentFont = new BitmapFont();
 		hud = new HudUs07(game.batch); 
 		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
-		criaCirculo();
 		estrutura = ""
 				+ "Se(bolinha = true){ "
 				+ "\nganha +1"
@@ -84,10 +84,10 @@ public class ScreenUs07 implements Screen {
 				+ "\nperde 1 ponto"
 				+ "\n"
 				+ "\n}";
-		
-		circulos.add(criaCirculo());
-		circulos.add(criaCirculo());
-		circulos.add(criaCirculo());
+		jogoPausado = true;
+		circulos.add(criaCirculo(false));
+		circulos.add(criaCirculo(false));
+		circulos.add(criaCirculo(false));
 	}
 	
 	@Override
@@ -101,10 +101,41 @@ public class ScreenUs07 implements Screen {
 	}
 	public void update(float delta){
 		handleInput(delta);
+		if(jogoPausado == false){
+			hud.update(delta);
+		}
 		for (Circulo circulo : circulos) {
 			if(circulo.isAtivo()){
 				circulo.update(delta);
 			}
+		}
+		//Remove Circulos que sairam da Tela
+		int removeu = 0;
+		int x = 1;
+		for (Circulo circulo : circulos) {
+			double aux = circulo.getPosition().y+circulo.getTexture().getHeight();
+			if(aux <= 0){
+				circulos.remove(circulo);
+				removeu++;
+				System.out.println("removeu "+removeu);
+			}
+			x++;
+		}
+		//Adiciona se removeu 1
+		if(removeu >=1){
+			for (int i = 0; i < removeu; i++) {
+				circulos.add(criaCirculo(true));
+				System.out.println("add");
+			}
+		}
+		//Se Acabou o Jogo, aparece um AVISO e limpa o Array de Circulos.
+		if(acabouJogo()){
+			x = 1;
+			for (Circulo circulo : circulos) {
+					circulos.remove(circulo);
+			}
+			System.out.println("JOGO ACABOU, CIRCULOS REMOVIDOS");
+			x++;
 		}
 	}
 	
@@ -209,7 +240,7 @@ public class ScreenUs07 implements Screen {
 						BarraLateral.setPosition(new Vector3(Aux01,BarraLateral.getPosition().y,0));
 						botao.setPosition(new Vector3(0,500,0));
 						setViewCirculo(true);
-						
+						jogoPausado = false;
 					}else{
 						System.out.println("Ativar!!");
 						BarraLateral.setAtivo(true);
@@ -217,6 +248,7 @@ public class ScreenUs07 implements Screen {
 						BarraLateral.setPosition(new Vector3(0,BarraLateral.getPosition().y,0));
 						botao.setPosition(new Vector3(BarraLateral.getTexture().getWidth(),500,0));
 						setViewCirculo(false);
+						jogoPausado = true;
 					}	
 					Clicked = 0;
 				}
@@ -227,9 +259,9 @@ public class ScreenUs07 implements Screen {
 		ClickedBotao = false;}
 	}
 	
-	public Circulo criaCirculo() {
+	public Circulo criaCirculo(boolean Ativo) {
 		Circulo circulo = new Circulo();
-		circulo.setAtivo(false);
+		circulo.setAtivo(Ativo);
 		circulo.setPosition(gerarPosition());
 		circulo = gerarVisual(circulo);
 		circulo = gerarQuestao(circulo);
@@ -273,4 +305,14 @@ public class ScreenUs07 implements Screen {
 		
 		return circulo;
 	}
+	public boolean acabouJogo(){
+		if (hud.getTimer() == 0) {
+			return true;
+		}else{return false;}
+		
+	}
+	public void Pontuar(int Tipo){
+		hud.setScore(Tipo);
+	}
+	
 }
