@@ -5,29 +5,31 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
-import Scenes.HudUs03;
 import Scenes.HudUs07;
 import Sprites.BarraLateral;
 import Sprites.Botao;
-import Sprites.Objeto;
 import Sprites.Circulo;
+import Tools.B2WorldCreator;
 
 //Tela destinada ao Jogo da User Story 07.
 public class ScreenUs07 implements Screen {
 	private HudUs07 hud;
+	//Variaveis Box2d
 	private World world;
+	private Box2DDebugRenderer b2dr;
 	private DevBilac game;
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
@@ -54,6 +56,10 @@ public class ScreenUs07 implements Screen {
 		// Chama o HudRanking que é um 'Display' na tela, onde ficas Labels.
 		this.game = game;
 		gamecam = new OrthographicCamera();
+		world = new World(new Vector2(0,-200 / DevBilac.PPM), true);
+		//Alterar para mudar a Gravidade do mundo
+		world = new World(new Vector2(0,-200 / DevBilac.PPM), true);
+		b2dr = new Box2DDebugRenderer();
 		//o 'Metodo' FitViewport faz o redimencionamento de tela.
 		gamePort = new FitViewport(DevBilac.V_WIDHT / DevBilac.PPM,DevBilac.V_HEIGHT / DevBilac.PPM,gamecam);
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2,0);
@@ -217,7 +223,6 @@ public class ScreenUs07 implements Screen {
 	}
 	
 	private Circulo criaCirculo() {
-		String img = "assets\\circulo.png";
 		Circulo circulo = new Circulo();
 		circulo.setAtivo(true);
 		circulo.setPosition(gerarPosition());
