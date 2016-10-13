@@ -51,6 +51,8 @@ public class ScreenUs07 implements Screen {
 	float milesimos;
 	int segundos;
 	boolean luz[] = {false,false,false};
+	int TConsecutivos;
+	int FConsecutivos;
 	
 	public ScreenUs07(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
@@ -89,7 +91,7 @@ public class ScreenUs07 implements Screen {
 				+ "\n"
 				+ "\n}";
 		jogoPausado = true;
-		criarCirculo(false);
+		//criarCirculo(false,3);
 	}
 	
 	@Override
@@ -103,6 +105,7 @@ public class ScreenUs07 implements Screen {
 	}
 	public void update(float delta){
 		handleInput(delta);
+		
 		if(jogoPausado == false){
 			hud.update(delta);
 		}
@@ -114,9 +117,12 @@ public class ScreenUs07 implements Screen {
 		//Remove Circulos que sairam da Tela
 		int removeu = 0;
 		for (int i = 0; i < circulos.size(); i++) {
-			double aux = circulos.get(i).getPosition().y;
+			double aux = circulos.get(i).getPosition().y+circulos.get(i).getTexture().getHeight();
 			if(aux <= 0){
 				circulos.remove(circulos.get(i));
+				if(circulos.get(i).isResposta()){
+					Pontuar(-5);
+				}
 				removeu++;
 			}
 		}
@@ -134,10 +140,10 @@ public class ScreenUs07 implements Screen {
 		}
 		
 		
-		
-		
 		CirculoAcao();
-		
+		if(!BarraLateral.isAtivo()){
+			gerarCirculos(delta);
+		}
 	}
 	
 	@Override
@@ -167,7 +173,6 @@ public class ScreenUs07 implements Screen {
 					batch.draw(new Texture("images\\ativo.png"),1100,570);
 					milesimos += delta;
 					if(milesimos >= 0.5){
-							segundos--;
 							luz[0] = false;
 							System.out.println("desligando luz");
 							milesimos = 0;
@@ -180,7 +185,6 @@ public class ScreenUs07 implements Screen {
 					batch.draw(new Texture("images\\ativo.png"),1100,520);
 					milesimos += delta;
 					if(milesimos >= 0.5){
-							segundos--;
 							luz[1] = false;
 							milesimos = 0;
 						
@@ -192,7 +196,6 @@ public class ScreenUs07 implements Screen {
 					batch.draw(new Texture("images\\ativo.png"),1100,470);
 					milesimos += delta;
 					if(milesimos >= 0.5){
-							segundos--;
 							luz[2] = false;
 							milesimos = 0;
 						
@@ -232,7 +235,13 @@ public class ScreenUs07 implements Screen {
 		currentFont.dispose();
 		
 	}
-
+	public void gerarCirculos(float delta){
+		milesimos += delta;
+		if(milesimos >= 0.8){
+				criarCirculo(true,1);
+				milesimos = 0;
+		}
+	}
 	//Metodo Utilizado para pegar as Posições X,Y do Mouse e tratalas adequadamente.
 		public Vector3 PositionMouse(){
 			Vector3 PositionM = new Vector3();
@@ -319,14 +328,21 @@ public class ScreenUs07 implements Screen {
 				}else{
 					if(ClickedCirculo == true && auxRemove == gravarId){
 					  	if(circulos.get(auxRemove).isResposta() == true){
-							Pontuar(2);
-							luz[0] = true;
-							//Ligar Luz VERDE
-							//IF VEZES SEGUIDAS, LIGAR ELSE
+							TConsecutivos++;
+							FConsecutivos = 0;
+							if(TConsecutivos >= 5){
+								Pontuar(10);
+								luz[1]=true;
+							}else{
+								Pontuar(2);
+								luz[0] = true;
+							}
 					  	}else{
-							Pontuar(-1);
+					  		FConsecutivos++;
+							TConsecutivos = 0;
+							Pontuar(-5);
 							luz[2] = true;
-							//Ligar Luz VERMELHA
+							
 					  	}
 						circulos.remove(circulos.get(auxRemove));
 						ClickedCirculo = false;
@@ -341,8 +357,8 @@ public class ScreenUs07 implements Screen {
 	}
 	
 	
-	public void criarCirculo(boolean Ativo) {
-		int limiteCirculos = 3;
+	public void criarCirculo(boolean Ativo,int quantidade) {
+		int limiteCirculos = quantidade;
 		for (int i = 0; i < limiteCirculos; i++) {
 			Circulo circulo = new Circulo();
 			circulo.setId(i);
@@ -361,12 +377,8 @@ public class ScreenUs07 implements Screen {
 	}
 	
 	public Vector3 gerarPosition(){
-		Vector3 positions[] = {
-				new Vector3(50,400,0),new Vector3(550,400,0),new Vector3(1050,400,0),
-		};
 		Random gerador = new Random();
-		int aux = gerador.nextInt(positions.length);
-		Vector3 newPosition = new Vector3(positions[aux].x,positions[aux].y,positions[aux].z);
+		Vector3 newPosition = new Vector3(gerador.nextInt(1000),1000,0);
 		
 		return newPosition;
 	}
