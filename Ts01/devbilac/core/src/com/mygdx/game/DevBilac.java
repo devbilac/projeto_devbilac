@@ -3,6 +3,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import Screens.PlayScreen;
+import Screens.ScreenUs05;
 import Screens.ScreenUs07;
 
 public class DevBilac extends Game {
@@ -17,7 +18,8 @@ public class DevBilac extends Game {
 		//setScreen(new PlayScreen(this));
 		//setScreen(new Ranking(this));
 		//setScreen(new ScreenUs03(this));
-		setScreen(new ScreenUs07(this));
+		//setScreen(new ScreenUs07(this));
+		setScreen(new ScreenUs05(this));
 		
 	}
 
