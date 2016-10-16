@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -22,8 +23,13 @@ public class ScreenUs05 implements Screen {
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
 	private SpriteBatch batch;
+	private Vector3 touchPos;
+	int tamanhoOriginalH;
+	int tamanhoOriginalW;
+	
 	
 	public ScreenUs05(DevBilac game){
+		// ----------------------- CONFIGURAÇÕES PADRÃO TELA
 		batch = new SpriteBatch();
 		// Chama o HudRanking que Ã© um 'Display' na tela, onde ficas Labels.
 		this.game = game;
@@ -36,6 +42,12 @@ public class ScreenUs05 implements Screen {
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2,0);
 		hud = new HudUs05(game.batch); 
 		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
+		
+		
+		// ----------------------- CONFIGURAÇÕES ADICIONAIS
+		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
+		tamanhoOriginalH = Gdx.graphics.getHeight();
+		tamanhoOriginalW = Gdx.graphics.getWidth();
 	}
 	
 	
@@ -61,6 +73,7 @@ public class ScreenUs05 implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		hud.stage.draw(); 
 		batch.begin();
+		//batch.draw();
 		batch.end();
 	}
 
@@ -94,4 +107,24 @@ public class ScreenUs05 implements Screen {
 		
 	}
 
+	//Logo Abaixo METODOS criados pelos Desenvolvedores:
+	
+	//Metodo Utilizado para pegar as Posições X,Y do Mouse e tratalas adequadamente.
+	public Vector3 PositionMouse(){
+		Vector3 PositionM = new Vector3();
+		touchPos.set(0,Gdx.input.getY(), 0);
+        gamecam.unproject(touchPos);
+        float TouchY = touchPos.y*300;
+        PositionM.x = Gdx.input.getX();
+        PositionM.y = (int)TouchY;
+        float aux01 = (tamanhoOriginalW - Gdx.graphics.getWidth())/2;
+        if(aux01 <=0){
+       	 PositionM.x = Gdx.input.getX()+aux01;
+        }else{
+       	 touchPos.set(Gdx.input.getX(),Gdx.input.getY(), 0);
+       	 gamecam.unproject(touchPos);
+        }
+        System.out.println(PositionM);
+		return PositionM;
+	}
 }
