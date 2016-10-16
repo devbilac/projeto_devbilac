@@ -242,7 +242,7 @@ public class ScreenUs07 implements Screen {
 				milesimos = 0;
 		}
 	}
-	//Metodo Utilizado para pegar as PosiÃ§Ãµes X,Y do Mouse e tratalas adequadamente.
+	//Metodo Utilizado para pegar as Posições X,Y do Mouse e tratalas adequadamente.
 		public Vector3 PositionMouse(){
 			Vector3 PositionM = new Vector3();
 			touchPos.set(0,Gdx.input.getY(), 0);
