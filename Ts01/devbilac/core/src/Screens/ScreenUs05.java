@@ -53,14 +53,15 @@ public class ScreenUs05 implements Screen {
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
 		tamanhoOriginalH = Gdx.graphics.getHeight();
 		tamanhoOriginalW = Gdx.graphics.getWidth();
+		this.visor = new Visor(470, 410);
+		this.botao = new Botao[12];
+		criaBotao();
 	}
 	
 	
 	@Override
 	public void show() {
-		this.visor = new Visor(180, 410);
-		this.botao = new Botao[12];
-		criaBotao();
+		
 	}
 	
 	public void handleInput(float delta){
@@ -193,7 +194,7 @@ public class ScreenUs05 implements Screen {
 	private void criaBotao() {
 		Texture img = new Texture("images\\botao.png");
 		
-		float x = 180;
+		float x = 470;
 		float y = 200;
 		int c = 0;
 		
@@ -206,12 +207,12 @@ public class ScreenUs05 implements Screen {
 			if (c == 3) {
 				c = 0;
 				y += 70;
-				x = 180;
+				x = 470;
 			}
 		}
 		
 		y = 130;
-		x = 180;
+		x = 470;
 		botao[0] = new Botao(x, y, "0", img);
 
 		x += 100;
@@ -219,7 +220,7 @@ public class ScreenUs05 implements Screen {
 		botao[10] = new Botao(x, y, "C", img);
 		
 		y -= 70;
-		x = 180;
+		x = 470;
 		img = new Texture("images\\botaoConfirma.png");		
 		botao[11] = new Botao(x, y, "Confirma", img);
 		botao[11].getPosText().x -= 70;
