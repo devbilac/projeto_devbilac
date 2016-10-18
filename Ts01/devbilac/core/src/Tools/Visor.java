@@ -15,7 +15,7 @@ public class Visor {
 
 	
 	public Visor(float x, float y) {
-		this.font = new BitmapFont(Gdx.files.internal("images\\fonts\\fontVisor.fnt"), false);
+		this.font = new BitmapFont(Gdx.files.internal("fonts\\fontVisor.fnt"), false);
 		this.img = new Texture("images\\visor.png");
 		this.text = "";
 		this.pos = new Vector3(x, y, 0);

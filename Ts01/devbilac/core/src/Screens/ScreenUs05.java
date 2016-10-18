@@ -170,28 +170,28 @@ public class ScreenUs05 implements Screen {
 		for (Botao b : botao) {
 			if (!b.getText().startsWith("C")){
 				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
-					b.setImg(new Texture("assets\\botaoOver.png"));
+					b.setImg(new Texture("images\\botaoOver.png"));
 				} else {
-					b.setImg(new Texture("assets\\botao.png"));				
+					b.setImg(new Texture("images\\botao.png"));				
 				}
 			} else if (b.getText().equals("C") ){
 				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
-					b.setImg(new Texture("assets\\botaoCOver.png"));
+					b.setImg(new Texture("images\\botaoCOver.png"));
 				} else {
-					b.setImg(new Texture("assets\\botaoC.png"));				
+					b.setImg(new Texture("images\\botaoC.png"));				
 				}				
 			} else {
 				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
-					b.setImg(new Texture("assets\\botaoConfirmaOver.png"));
+					b.setImg(new Texture("images\\botaoConfirmaOver.png"));
 				} else {
-					b.setImg(new Texture("assets\\botaoConfirma.png"));				
+					b.setImg(new Texture("images\\botaoConfirma.png"));				
 				}								
 			}
 		}		
 	}
 	
 	private void criaBotao() {
-		Texture img = new Texture("assets\\botao.png");
+		Texture img = new Texture("images\\botao.png");
 		
 		float x = 180;
 		float y = 200;
@@ -215,12 +215,12 @@ public class ScreenUs05 implements Screen {
 		botao[0] = new Botao(x, y, "0", img);
 
 		x += 100;
-		img = new Texture("assets\\botaoC.png");
+		img = new Texture("images\\botaoC.png");
 		botao[10] = new Botao(x, y, "C", img);
 		
 		y -= 70;
 		x = 180;
-		img = new Texture("assets\\botaoConfirma.png");		
+		img = new Texture("images\\botaoConfirma.png");		
 		botao[11] = new Botao(x, y, "Confirma", img);
 		botao[11].getPosText().x -= 70;
 	}

@@ -15,7 +15,7 @@ public class Botao {
 
 	
 	public Botao(float x, float y, String text, Texture img) {
-		this.font = new BitmapFont(Gdx.files.internal("images\\fonts\\fontBotao.fnt"), false);
+		this.font = new BitmapFont(Gdx.files.internal("fonts\\fontBotao.fnt"), false);
 		this.pos = new Vector3(x, y, 0);
 		this.text = text;
 		this.img = img;
