@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,6 +15,8 @@ import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs05;
 import Scenes.HudUs07;
+import Tools.Botao;
+import Tools.Visor;
 
 public class ScreenUs05 implements Screen {
 	private HudUs05 hud;
@@ -26,6 +29,8 @@ public class ScreenUs05 implements Screen {
 	private Vector3 touchPos;
 	int tamanhoOriginalH;
 	int tamanhoOriginalW;
+	private Visor visor;
+	private Botao[] botao;
 	
 	
 	public ScreenUs05(DevBilac game){
@@ -53,8 +58,9 @@ public class ScreenUs05 implements Screen {
 	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		this.visor = new Visor(180, 410);
+		this.botao = new Botao[12];
+		criaBotao();
 	}
 	
 	public void handleInput(float delta){
@@ -74,6 +80,18 @@ public class ScreenUs05 implements Screen {
 		hud.stage.draw(); 
 		batch.begin();
 		//batch.draw();
+		
+		verificaClick();
+		mouseOver();
+				
+		for (Botao b : botao) {
+			batch.draw(b.getImg(), b.getPos().x, b.getPos().y);			
+			b.getFont().draw(batch, b.getText(), b.getPosText().x, b.getPosText().y);			
+		}
+		
+		batch.draw(visor.getImg(), visor.getPos().x, visor.getPos().y);
+		visor.getFont().draw(batch, visor.getText(), visor.getPosText().x, visor.getPosText().y);
+				
 		batch.end();
 	}
 
@@ -127,4 +145,89 @@ public class ScreenUs05 implements Screen {
         System.out.println(PositionM);
 		return PositionM;
 	}
+	
+	private void verificaClick() {
+		for (Botao b : botao) {
+			if ((Gdx.input.justTouched() && Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
+				if (b.getText().equals("C")) 
+					visor.apaga();			
+				else if (b.getText().equals("Confirma")) {
+					/* Ação quando o usuario confirmar resposta;
+					 * 
+					 * 
+					 * 
+					 * 
+					 */
+				} else {
+					visor.add(b.getText());
+				}
+			}
+				
+		}
+	}
+	
+	private void mouseOver() {
+		for (Botao b : botao) {
+			if (!b.getText().startsWith("C")){
+				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
+					b.setImg(new Texture("assets\\botaoOver.png"));
+				} else {
+					b.setImg(new Texture("assets\\botao.png"));				
+				}
+			} else if (b.getText().equals("C") ){
+				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
+					b.setImg(new Texture("assets\\botaoCOver.png"));
+				} else {
+					b.setImg(new Texture("assets\\botaoC.png"));				
+				}				
+			} else {
+				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
+					b.setImg(new Texture("assets\\botaoConfirmaOver.png"));
+				} else {
+					b.setImg(new Texture("assets\\botaoConfirma.png"));				
+				}								
+			}
+		}		
+	}
+	
+	private void criaBotao() {
+		Texture img = new Texture("assets\\botao.png");
+		
+		float x = 180;
+		float y = 200;
+		int c = 0;
+		
+		for (int i = 1; i < 10; i++) {
+			botao[i] = new Botao(x, y, String.valueOf(i), img);
+			
+			x += 100;
+			c++;
+			
+			if (c == 3) {
+				c = 0;
+				y += 70;
+				x = 180;
+			}
+		}
+		
+		y = 130;
+		x = 180;
+		botao[0] = new Botao(x, y, "0", img);
+
+		x += 100;
+		img = new Texture("assets\\botaoC.png");
+		botao[10] = new Botao(x, y, "C", img);
+		
+		y -= 70;
+		x = 180;
+		img = new Texture("assets\\botaoConfirma.png");		
+		botao[11] = new Botao(x, y, "Confirma", img);
+		botao[11].getPosText().x -= 70;
+	}
+	
+	
+	
+	
+	
+	
 }
