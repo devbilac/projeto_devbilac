@@ -53,6 +53,10 @@ public class ScreenUs07 implements Screen {
 	boolean luz[] = {false,false,false};
 	int TConsecutivos;
 	int FConsecutivos;
+	int Config_NumeroConsecutivos;
+	int Config_PontosC;
+	int Config_PontosN;
+	int Config_PontosE;
 	
 	public ScreenUs07(DevBilac game){
 		//Pega o Tamanho Atual da Tela, Largura e Altura e armazena.
@@ -82,16 +86,27 @@ public class ScreenUs07 implements Screen {
 		currentFont = new BitmapFont();
 		hud = new HudUs07(game.batch); 
 		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
-		estrutura = ""
-				+ "Se(bolinha = true){ "
-				+ "\nganha +1"
-				+ "\n"
-				+ "\n}senao{"
-				+ "\nperde 1 ponto"
-				+ "\n"
-				+ "\n}";
+		
+		
+		//Configurações da Estrutura
+		Config_NumeroConsecutivos = 5;
+		Config_PontosC = 5;
+		Config_PontosN = 2;
+		Config_PontosE = -5;
+		//AVISO DA ESTRUTURA DO MENU LATERAL.
+				estrutura = ""
+						+ "Se(bolinha = true){ "
+						+ "\nganha +"+Config_PontosN+" Pontos"
+						+ "\n"
+						+ "\n}se(Consecutivos >= "+Config_NumeroConsecutivos+"){"
+						+ "\nganha +"+Config_PontosC+" Pontos"
+						+ "\n"
+						+ "}senao{"
+						+ "\nperde "+Config_PontosE+" Pontos"
+						+ "\n"
+						+ "\n}";
+				
 		jogoPausado = true;
-		//criarCirculo(false,3);
 	}
 	
 	@Override
@@ -326,6 +341,7 @@ public class ScreenUs07 implements Screen {
 						}	
 					}
 				}else{
+					//Sistema de Pontuação
 					if(ClickedCirculo == true && auxRemove == gravarId){
 					  	if(circulos.get(auxRemove).isResposta() == true){
 							TConsecutivos++;
