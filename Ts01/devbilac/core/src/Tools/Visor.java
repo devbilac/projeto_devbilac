@@ -8,36 +8,68 @@ import com.badlogic.gdx.math.Vector3;
 public class Visor {
 
 	private Texture img;
-	private String text;
+	private String textResposta = "";
+	private String textPergunta;
+	private String textIgual = "=";
 	private Vector3 pos;
-	private Vector3 posText;
+	private Vector3 posTextResposta;
+	private Vector3 posTextPergunta;
+	private Vector3 posTextIgual;
 	private BitmapFont font;
 
 	
 	public Visor(float x, float y) {
 		this.font = new BitmapFont(Gdx.files.internal("fonts\\fontVisor.fnt"), false);
 		this.img = new Texture("images\\visor.png");
-		this.text = "";
 		this.pos = new Vector3(x, y, 0);
-		this.configPostext();
+		this.configPostextResposta();
+		this.configPostextPergunta();
+		this.configPostextIgual();
 	}
 	
-	private void configPostext() {
+	private void configPostextResposta() {
 		float x = (getPos().x + getImg().getWidth() - 10); 
 		float y = getPos().y + 40;
-		this.posText = new Vector3(x, y, 0);
+		this.posTextResposta = new Vector3(x, y, 0);
 	}
 	
-	public void apaga() {
-		if (getText().length() > 0) {
+	private void configPostextPergunta() {
+		float x = getPos().x + 10;
+		float y = getPos().y + 40;
+		this.posTextPergunta = new Vector3(x, y, 0);
+	}
+	
+	private void configPostextIgual() {
+		float x = getPos().x + (getImg().getWidth() /2);
+		float y = getPos().y + 40;
+		this.posTextIgual = new Vector3(x, y, 0);
+	}
+	public void apagaResposta() {
+		if (getTextResposta().length() > 0) {
+			if (getTextResposta().length() == 1) {
+				this.textResposta = "";
+				configPostextResposta();
+			}else{
+			setTextResposta(getTextResposta().substring(0, getTextResposta().length()-1));
+			getPosTextResposta().x += 21;
+			}
+		}
+		
+	}
+	public void apagaPergunta() {
+		/*if (getText().length() > 0) {
 			setText(getText().substring(0, getText().length()-1));
 			getPosText().x += 21;
-		}
+		}*/
+		this.textPergunta = "";
+		configPostextPergunta();
 	}
 	
 	public void add(String text) {
-		this.text += text;
-		getPosText().x -= 21;
+		if(getTextResposta().length() <3){
+			this.textResposta += text;
+			getPosTextResposta().x -= 21;
+		}
 	}
 
 	public Texture getImg() {
@@ -48,12 +80,28 @@ public class Visor {
 		this.img = img;
 	}
 
-	public String getText() {
-		return text;
+	public String getTextResposta() {
+		return textResposta;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setTextResposta(String textResposta) {
+		this.textResposta = textResposta;
+	}
+
+	public String getTextPergunta() {
+		return textPergunta;
+	}
+
+	public void setTextPergunta(String textPergunta) {
+		this.textPergunta = textPergunta;
+	}
+
+	public String getTextIgual() {
+		return textIgual;
+	}
+
+	public void setTextIgual(String textIgual) {
+		this.textIgual = textIgual;
 	}
 
 	public Vector3 getPos() {
@@ -64,12 +112,28 @@ public class Visor {
 		this.pos = pos;
 	}
 
-	public Vector3 getPosText() {
-		return posText;
+	public Vector3 getPosTextResposta() {
+		return posTextResposta;
 	}
 
-	public void setPosText(Vector3 posText) {
-		this.posText = posText;
+	public void setPosTextResposta(Vector3 posTextResposta) {
+		this.posTextResposta = posTextResposta;
+	}
+
+	public Vector3 getPosTextPergunta() {
+		return posTextPergunta;
+	}
+
+	public void setPosTextPergunta(Vector3 posTextPergunta) {
+		this.posTextPergunta = posTextPergunta;
+	}
+
+	public Vector3 getPosTextIgual() {
+		return posTextIgual;
+	}
+
+	public void setPosTextIgual(Vector3 posTextIgual) {
+		this.posTextIgual = posTextIgual;
 	}
 
 	public BitmapFont getFont() {

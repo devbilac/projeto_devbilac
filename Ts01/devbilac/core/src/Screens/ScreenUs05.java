@@ -1,6 +1,9 @@
 package Screens;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,6 +34,8 @@ public class ScreenUs05 implements Screen {
 	int tamanhoOriginalW;
 	private Visor visor;
 	private Botao[] botao;
+	private double resposta;
+	private String pergunta;
 	
 	
 	public ScreenUs05(DevBilac game){
@@ -54,8 +59,9 @@ public class ScreenUs05 implements Screen {
 		tamanhoOriginalH = Gdx.graphics.getHeight();
 		tamanhoOriginalW = Gdx.graphics.getWidth();
 		this.visor = new Visor(470, 410);
-		this.botao = new Botao[12];
+		this.botao = new Botao[11];
 		criaBotao();
+		gerarQuestao();
 	}
 	
 	
@@ -65,33 +71,39 @@ public class ScreenUs05 implements Screen {
 	}
 	
 	public void handleInput(float delta){
-		
+		acionarTeclado();
 	}
-	
+
+
 	public void update(float delta){
-		handleInput(delta);
 		hud.update(delta);
+		//Bloquear
+		if(!acabouJogo()){
+			handleInput(delta);
+			verificaResposta();
+			verificaClick();
+			mouseOver();
+		}
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(float delta) {		
 		update(delta);
+		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		hud.stage.draw(); 
 		batch.begin();
 		//batch.draw();
-		
-		verificaClick();
-		mouseOver();
 				
 		for (Botao b : botao) {
 			batch.draw(b.getImg(), b.getPos().x, b.getPos().y);			
 			b.getFont().draw(batch, b.getText(), b.getPosText().x, b.getPosText().y);			
 		}
-		
 		batch.draw(visor.getImg(), visor.getPos().x, visor.getPos().y);
-		visor.getFont().draw(batch, visor.getText(), visor.getPosText().x, visor.getPosText().y);
+		visor.getFont().draw(batch, visor.getTextResposta(), visor.getPosTextResposta().x, visor.getPosTextResposta().y);
+		visor.getFont().draw(batch, visor.getTextPergunta(), visor.getPosTextPergunta().x, visor.getPosTextPergunta().y);
+		visor.getFont().draw(batch, visor.getTextIgual(), visor.getPosTextIgual().x, visor.getPosTextIgual().y);
 				
 		batch.end();
 	}
@@ -151,16 +163,13 @@ public class ScreenUs05 implements Screen {
 		for (Botao b : botao) {
 			if ((Gdx.input.justTouched() && Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
 				if (b.getText().equals("C")) 
-					visor.apaga();			
+					visor.apagaResposta();			
 				else if (b.getText().equals("Confirma")) {
-					/* Ação quando o usuario confirmar resposta;
-					 * 
-					 * 
-					 * 
-					 * 
+					/* Botão Confirma foi desativado.
+					 * Ação quando o usuario confirmar resposta; 
 					 */
 				} else {
-					visor.add(b.getText());
+						visor.add(b.getText());
 				}
 			}
 				
@@ -182,11 +191,11 @@ public class ScreenUs05 implements Screen {
 					b.setImg(new Texture("images\\botaoC.png"));				
 				}				
 			} else {
-				if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
+				/*if ((Gdx.input.getX() >= b.getPos().x && Gdx.input.getX() <= b.getPos().x + b.getImg().getWidth()) && Gdx.graphics.getHeight() - Gdx.input.getY() >= b.getPos().y && Gdx.graphics.getHeight() - Gdx.input.getY() <= b.getPos().y + b.getImg().getHeight()) {
 					b.setImg(new Texture("images\\botaoConfirmaOver.png"));
 				} else {
 					b.setImg(new Texture("images\\botaoConfirma.png"));				
-				}								
+				}*/								
 			}
 		}		
 	}
@@ -219,16 +228,160 @@ public class ScreenUs05 implements Screen {
 		img = new Texture("images\\botaoC.png");
 		botao[10] = new Botao(x, y, "C", img);
 		
-		y -= 70;
+		/*
+		 * y -= 70;
 		x = 470;
 		img = new Texture("images\\botaoConfirma.png");		
 		botao[11] = new Botao(x, y, "Confirma", img);
 		botao[11].getPosText().x -= 70;
+		*/
 	}
 	
+	public void gerarQuestao(){
+		
+		Random gerador = new Random();
+		int limiteNumero = 12;
+		int primeiro = gerador.nextInt(limiteNumero);
+		int segundo = gerador.nextInt(limiteNumero);
+		boolean GerarMaior = true;
+		
+		while(GerarMaior){
+			if(primeiro < segundo){
+				primeiro = gerador.nextInt(limiteNumero);
+			}else{GerarMaior = false;}
+		}
+		while(primeiro == 0 && segundo == 0){
+			primeiro = gerador.nextInt(limiteNumero);
+			segundo = gerador.nextInt(limiteNumero);
+		}
+		// ---
+		// 0 - Adição ~ 1 - Subtração ~ 2 - Multiplicação ~ 3 - Divisão
+		// ---
+		int operador = gerador.nextInt(4);
+		double resposta = 0;
+		String pergunta = "";
+		boolean verificador;
+		
+		switch (operador) {
+		case 0:
+			resposta = primeiro + segundo;
+			pergunta = primeiro+" + "+segundo;
+			break;
+
+		case 1:
+			resposta = primeiro - segundo;
+			pergunta = primeiro+" - "+segundo;
+			break;
+
+		case 2:
+			resposta = primeiro * segundo;
+			pergunta = primeiro+" * "+segundo;
+			break;
+
+		case 3:
+			verificador = true;
+			while(verificador){
+				double aux = primeiro / segundo;
+				if(inteiro(aux)){
+					resposta = primeiro / segundo;
+					pergunta = primeiro+" / "+segundo;
+					verificador = false;
+				}else{
+					primeiro = gerador.nextInt(limiteNumero);
+					segundo = gerador.nextInt(limiteNumero);
+					GerarMaior = true;
+					while(GerarMaior){
+						if(primeiro < segundo){
+							primeiro = gerador.nextInt(limiteNumero);
+							segundo = gerador.nextInt(limiteNumero);
+						}else{GerarMaior = false;}
+					}
+					while(primeiro == 0 && segundo == 0){
+						primeiro = gerador.nextInt(limiteNumero);
+						segundo = gerador.nextInt(limiteNumero);
+					}
+				}
+				
+			}
+			resposta = primeiro / segundo;
+			pergunta = primeiro+" / "+segundo;
+			break;
+
+		default:
+			//Caso ocorra algum erro não previsto, como default a operação é Adição.
+			resposta = primeiro + segundo;
+			pergunta = primeiro+" + "+segundo;
+			break;
+		}
+		this.pergunta = pergunta;
+		this.resposta = resposta;
+
+		System.out.println(pergunta+" = "+resposta);
+		visor.setTextPergunta(pergunta);
+	}
 	
+	private boolean inteiro(double num) {
+		int aux = (int)num;
+		return (((double)aux) == num);
+	}
 	
+	public void verificaResposta(){
+		if(visor.getTextResposta() != null && visor.getTextResposta() != ""){
+			int aux = Integer.parseInt(visor.getTextResposta());
+			if(resposta == aux){
+				//PONTOS
+				System.out.println("Acertou !");
+				visor.apagaResposta();
+				Pontuar(2);
+				//Gerar outra Pergunta
+				gerarQuestao();
+			}
+		}
+	}
 	
-	
-	
+	private void acionarTeclado() {
+		//Adicionar Metodos pelo Teclado
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_0) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_0)){
+					visor.add("0");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_1) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_1)){
+					visor.add("1");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_2) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)){
+					visor.add("2");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_3) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_3)){
+					visor.add("3");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_4) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)){
+					visor.add("4");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_5) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_5)){
+					visor.add("5");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_6) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)){
+					visor.add("6");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_7) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_7)){
+					visor.add("7");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_8) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)){
+					visor.add("8");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_9) || Gdx.input.isKeyJustPressed(Keys.NUMPAD_9)){
+					visor.add("9");
+				}
+				if(Gdx.input.isKeyJustPressed(Keys.BACKSPACE)){
+					visor.apagaResposta();
+				}
+	}
+	public boolean acabouJogo(){
+		if (hud.getTimer() == 0) {
+			return true;
+		}else{return false;}
+		
+	}
+	public void Pontuar(int Tipo){
+		hud.setScore(Tipo);
+	}
 }

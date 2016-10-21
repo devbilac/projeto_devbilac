@@ -18,8 +18,8 @@ public class DevBilac extends Game {
 		//setScreen(new PlayScreen(this));
 		//setScreen(new Ranking(this));
 		//setScreen(new ScreenUs03(this));
-		//setScreen(new ScreenUs07(this));
-		setScreen(new ScreenUs05(this));
+		setScreen(new ScreenUs07(this));
+		//setScreen(new ScreenUs05(this));
 		
 	}
 
