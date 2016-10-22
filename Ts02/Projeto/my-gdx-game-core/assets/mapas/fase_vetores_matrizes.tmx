@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="ties" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="480" columns="20">
+  <image source="tiles.png" width="343" height="410"/>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="blocked" type="int" value="0"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="85">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="142">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="50" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2XPQ7CMAyFs4IKZelaYOwM7NmAg3AIFhYkVjb+TosjpcJYNhiappFg+NTmyQl61E9uM2NMBlhCxlzpPdXsi1q6j1tzZ3+DO2cP7DwHQXO1Y2ACTNF+rk57XhOt5gQMPGfgAlyBm6BtgBkwBxZ+rd2r1ayyTvLRB0p/7QvaFlgCK2Dt19q9Ws0yWsFo1Edq5J4RQ47APo7oedD+a6K5/w/nqPhgr1XWST5C9niMHFEf1jz3ZM88erdHNK6Oag4uR1yd9Ls4E5KGfQwTJFdCfbSRjxia5CNk77ahlUbOB/Yh9amkhZgVr7R/PuLPipTyUc8K56OtWfFufnD5+LSfY7xzcdo/H837WfPtkvr8CP3OFTofXeXo1/JRdajhHFVCnTYfVUcalyOuTpuPqiONyxFXl3o+tNQe7u6uP76IEwAA
+  </data>
+ </layer>
+</map>
