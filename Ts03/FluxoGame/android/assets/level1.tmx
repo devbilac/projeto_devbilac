@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="125">
+ <tileset firstgid="1" name="terrain" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="terrain.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="4097" name="download" tilewidth="16" tileheight="16" tilecount="175" columns="25">
+  <image source="download.png" width="410" height="123"/>
+ </tileset>
+ <tileset firstgid="4272" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="Atlas/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="8368" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="Atlas/base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="12464" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="16" tileheight="16" tilecount="12288" columns="128">
+  <image source="Atlas/DungeonCrawl_ProjectUtumnoTileset.png" trans="ff00ff" width="2048" height="1536"/>
+ </tileset>
+ <layer name="background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt1blOw0AQxvGtgJIKI4HCUeAH4JS4jwbEKW4IdJwSR+AV0oRnQPA+vAJSnoU/IoXj2NI6TvAavuLXjGZHsyvNbLnbmFGMYRwTmMQUygHTmMEs5jCPBSzWBHNt6om4aAnLWHGgF1vr2MAmtrCNnVDOHvZxgEMc4RgnEXe2qRcWtx/S5negE10W76C9I6co4syBXmxd4BJXuMYNbkM5d7jHAx5RwhOeI+5sUy8sbj+kzR/AIIYs3qGZvSNuSfoPuFI77+L2Q6vybTSzd8QtSf8BV2q74LOnMVaNiIm0Szv2+m/UdkGfZ0y/Vx8reNn0IiLJrPrGrPn1sXPNr0guVJjdl9D8vml+RXLhw/8RjFU1vyK5oPkVya+o+S30Zt+XyH+zW5PkTMVvjL2OZH8Xkb+qONw637MaJU1/7xayfkORrHwBybbtZw==
+  </data>
+ </layer>
+ <layer name="graphics back" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztmktsVUUYgP+WAulDaKuICyJ93L6EggngIz4SqImBUkhcuTDySniUpbpTcgkkJlZh60oOkPAoO/GZKAtEjC2gbtQVz8RHu1QDiUD85p4z3jmTOXPObW9pIfdPvpw5M9P/xOv9zj8zF5FK3A/xfU6ktkOkDvoj1hntmy1FbrXE703qydOQC+es49oP62EgF59XlyvOfSjnzqWfY+e5FY3ZOZKeVcjRkUw9NMCF3D36sMsY40slv2GpyEa4DFfgKlyD63BjaThnDBb1ivh4Apb0xvNUYuaH6e5aeC8nAc4E+BGMtEvg8/dWS7Jn5JEheB8+yPmdTMqtrnYe/Uw7h/2srP7ezw7jW/4Anh2Ex3FvMbRAK7RBe+hkHjfzu5ZLfifsgO0hQlvoE8ZkkLm7e+N5KjGzw3ZXfZfxIMCLgNoWuGqiq/6qPpdnSTXb57bPZfP5WXKYf/8gOoxv+Xm4Ox9ex7dNsBm2wFbYBqeYMwwncfYEHIdjIUJb6BPGZDicG8sz1XG+ceqf8aCGy11Va/EhoKYFDZa/1GIZhQtwsd1fi30u2j4meefK5/Mz7T7N3/vRYeWmXj9/hG+HIIDDcASOwjhzxuBPnP0DfoffQoS20CeMyVg4N5bnNn7daXRfS0H9zV0Y6RSZVStSA6O0/7XGK5Et0tbMA4a72gV7v5nmks9nX033vSfS3gNJObS/Zt+Md7hPpKovvGoK90aMG+vny/h2Ba7CNbgON9T6eRnrZ+h5UvLd0AWdIUJb6BPGhDlqbizPCj6nlbAKvmoS+bop29XVPgOLFsZ52RqvRHqkrZlHrT1v2p41ySPf+tnnXtLZVtLaPUsO13nXTK/DeVzd2xdeNXstf5Wbl3D3B7X/xb3F0AKt0AbtsJs5g7ALZ3fCDtgeIrSFPmFMBsO5sTxv4O2b8Bbcbpo4d+BuK59tl8g+au/+2rD9nTle8Tc1sqyZqU+By41S9re+fXLaGtl3tpW0J7af4zqztvsehLW0cnMedXK+2rfi2ybYDFtgK2yDU8wZhpM4ewKOw7EQoS30CWMyHM6N5TmNt5/Ap/B888TQfr7YxncIZ7/B3XO1YXuuOd483Z/mzI4kdxX4WFgzU5eCi5G/WfamJna/ncO1LnZ57TqXyrK2vunJ4TpfS/O3v4wO/9wt8gv82j25PHYoNzfg7ka1b8W3QxDAYTgCR2GcOWPLCnW3UGsVUf0t9On+sXBuLI/p79vNE8OsvyM4O6uO/S/U8Vm8W6m/mcLnrv0bb9KZUZKvSbXUnpv2m2+WGu5aF2ep9VnPr2x/J+NwM9/PhyNfH+0RWQiP9ZSWIy2Umwdw9yC8tszNkuXsf5cX6m6h1iqi+lvo0/3MUXOlobeI6a/2LCv2fO1vH+6+FPk7HevnS53sNzrvzbPKEVnctX/jTfLRHM83JbvqIstvvmn+Jv1bDj3vizXFuUP8N325Juwzr7E1cs4/Xu46/Gop/jrOq+zx2LlWmagyrvb6+YUS0N7q+8L+F2f34e7+urA9t7mYdyLr57WryQP9sB4GrLaOH/H1p8jZebxD5neV/qzpitq2dHfT/LVR7mp/Ffr96ftb37o4bZ3uy5G0HlD+Pst38Jm++PV/N6N3QeJ4meqwGR+W4K/rvMoeN8+18pNEO2v6+xfe/g3/ROvnd0pAe6vvC/vf7iJDyt+2Yt49k/TX5bJ9X+5o7ih/zsmGax/r2/cq9Pszy57YtzZ3jWf57deVT9ffz/j/9vnqYn3V93a/vp5VZyxwDr6F8+qcNEL3n01om/OnOrS3VWXG9HgF76qVsKqEd5btuY49uFpdz/4XamA2zKkvjp+ZxPnVc48UuZfxisffj/nMTufCqw59n3S1+yYS+vvfuCBO04JwzO5X6PenaywLTRP8O2+uqP4+hZNPrynWV31v9+trNXVhFtTAbJij6kSE7q9OaJvzpzq0v+XGzPsfOzDBMA==
+  </data>
+ </layer>
+ <layer name="graphics" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztmttP01Acx39iQpSp2cYc8LaNsbH9CWNbiCRTIVHm5cXgm/4PmkACmuDtxRvig77pu26JtzFCtmhUFPFZedM/QE28sEv8Nu1cU9v14mFtXb/JJ6fnlIbfuvNpTwtETpwQ5cO0wpETWjE50bh02+y6Oz2f/ESf/WZX4cSJEyMJ9xENgZdw+BV4DVY7zOepGNHJmNlVmJNO/uwsY9Z5PAV3T4MdYCfoAa4+tr/D6nPkDmq7a+H6tjKd/NlZxqzzeA+u3gcHwEEwDib+0d+Mj2g/6A7yfavOkamoPP97Km6iKqiJaPTrbrOrs09KIaJyyOwq+FyEs5fAZXBFo79K9c/D3QsgE2RboxM2KXiIlgSKku1lj9nV2Sddg0TbB82uwnjU6p93/LVk8j5ayQFxmxf1za7PLtmHuT9mY3/V6n9hMX+V1stq2DUVZ13cMpNxoiw4Ao6CY+B4XPvx5zD3z9vYX7X6uy3ybNCJSWAdPAKSIAXSzrr4r1yFq9fAdXAD3AQLOvwtYe6XbeyvWv2ZLfa3hOf0MuN35UZzQsf33o5w/hYYPNcmsf5IRdmNaclaguhdotlKszpM9Aa8BWvDxvs0RrStBdQCbn9XGM+PYeX9Vk87rj9pvz60ronXcd7fh9VbpeN74Ksrrtwu4Np1CyyC2yHln6sGsL4N8K0euGPqgeZ5kr5T5tytgCqoSVxuvK/S4vQ0PutMlN2YlnyEsxuJZiuNK0a0C+wGe2LG+7NwbK4Fsy2YE/mptt+q+XP9EeIeIPIAL+gFPrB3oL01LUaaPB9Vxj2kjgeUR+VhkUIQHoGipJVDuo/rL4veL4j95DjrIzrTi3ugF/dAL++xGM7pugZ/l+BfMcpujEXWhb9FHkJ7GIyDiZj+/iPMkcfgCXgKnoFCxLrjcvuMvtORIy3839aHflw7wUa//vunEkoeafFQzstJkBVaJbIt/H2A69bDsLG2sT2C+3ISpEA1qI8aqIv8/QIXv4JvHt5ZzlHO32lsz3j5MTGc02mvuitVfK+1KLsxK+U75v8P8BP8ApugErHuuNy+36w24k8=
+  </data>
+ </layer>
+ <objectgroup name="escadas">
+  <object id="119" x="246.625" y="80.6667" width="19.5" height="111.708"/>
+  <object id="120" x="3318.63" y="63.5" width="19.5" height="89.25"/>
+ </objectgroup>
+ <objectgroup name="moedas"/>
+ <objectgroup name="chao" offsetx="-0.25" offsety="0">
+  <object id="44" x="0" y="192.333" width="319.5" height="16"/>
+  <object id="46" x="2" y="79" width="313" height="22"/>
+  <object id="48" x="388" y="78" width="55" height="24"/>
+  <object id="55" x="384" y="192" width="289" height="17"/>
+  <object id="58" x="640" y="160" width="192.333" height="47.5"/>
+  <object id="63" x="880.5" y="159.5" width="111" height="49"/>
+  <object id="64" x="943.576" y="112.108" width="223.303" height="16"/>
+  <object id="65" x="1008" y="64" width="95" height="15.5"/>
+  <object id="71" x="1152.25" y="160.083" width="223.25" height="47.25"/>
+  <object id="78" x="1440.32" y="160.435" width="345.477" height="47.2917"/>
+  <object id="79" x="1828" y="161.583" width="60.6667" height="46.4167"/>
+  <object id="80" x="1888.7" y="153.105" width="15.625" height="55.5625"/>
+  <object id="81" x="1904.17" y="113.333" width="57.8333" height="94.6667"/>
+  <object id="82" x="2004.5" y="65.4167" width="119.5" height="25.9167"/>
+  <object id="83" x="1961.82" y="160.205" width="80.6667" height="47.9167"/>
+  <object id="96" x="2176.55" y="143.333" width="30.7273" height="64"/>
+  <object id="97" x="2256.67" y="143.333" width="30" height="64"/>
+  <object id="98" x="2336.67" y="143.333" width="30.6667" height="65.3333"/>
+  <object id="99" x="2417.33" y="143.333" width="30.6667" height="64.6667"/>
+  <object id="100" x="2561.33" y="145.333" width="77.3333" height="64"/>
+  <object id="101" x="2704" y="144.667" width="1136" height="63.3333"/>
+  <object id="102" x="2496.67" y="144" width="16.6667" height="16.6667"/>
+  <object id="108" x="3310.67" y="63.3333" width="97.3333" height="32.6667"/>
+  <object id="114" x="343" y="68" width="20" height="21"/>
+ </objectgroup>
+ <objectgroup name="placas" offsetx="0" offsety="-1.33333">
+  <object id="88" x="2048" y="31.3333" width="32" height="32.6667"/>
+  <object id="95" x="1038.67" y="32" width="33.3333" height="30.6667"/>
+  <object id="110" x="3359.33" y="33.3333" width="32" height="28.6667"/>
+  <object id="124" x="399.5" y="49.1667" width="32.3334" height="31.6667"/>
+ </objectgroup>
+ <objectgroup name="traps">
+  <object id="62" x="832" y="191.5" width="48" height="16.25"/>
+  <object id="66" x="991.75" y="169" width="159.75" height="40"/>
+  <object id="75" x="1375.92" y="192" width="63.4167" height="16"/>
+  <object id="84" x="2008.67" y="91.3333" width="110.5" height="19.3333"/>
+  <object id="85" x="2080.67" y="-2.66667" width="220.667" height="15.0833"/>
+  <object id="86" x="1786.33" y="193.333" width="41.4792" height="14.6667"/>
+  <object id="87" x="2042.49" y="191.031" width="133.333" height="16.6667"/>
+  <object id="92" x="2207.27" y="190.424" width="50" height="17.3333"/>
+  <object id="93" x="2288" y="192" width="47.3333" height="15.3333"/>
+  <object id="94" x="2367.92" y="191.333" width="48.0833" height="18"/>
+  <object id="103" x="2447.33" y="192.667" width="112.667" height="15.3333"/>
+  <object id="104" x="2639.69" y="159.333" width="64.1212" height="49.3333"/>
+  <object id="115" x="755" y="146" width="26" height="17"/>
+  <object id="116" x="319.75" y="200.75" width="64" height="8"/>
+ </objectgroup>
+ <objectgroup name="porta">
+  <object id="118" x="3677.33" y="79.3333" width="35.3333" height="62.6667"/>
+ </objectgroup>
+</map>
