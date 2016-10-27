@@ -46,13 +46,13 @@ public class PlayScreen implements Screen {
         this.game = game;
         gameCam = new OrthographicCamera();
         
-        //Criando a FitViewport para manter o aspecto virtual em relação ao tamanho da tela
+        //Criando a FitViewport para manter o aspecto virtual em relacao ao tamanho da tela
         gamePort = new FitViewport(FluxoGame.V_WIDTH / FluxoGame.PPM, FluxoGame.V_HEIGHT / FluxoGame.PPM, gameCam);
 
         //Criando a HUD para o placar
         hud = new Hud(game.batch);
         
-        //Carregando o mapa ou a renderização do mapa
+        //Carregando o mapa ou a renderizacaoo do mapa
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1 / FluxoGame.PPM);
@@ -120,12 +120,16 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
+        //colocar textura no jogo
+        // game.batch.draw(new Texture(""),0,0);
+        
         player.draw(game.batch);
         game.batch.end();
-
+        
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
+        
 
     }
 
