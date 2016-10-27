@@ -15,6 +15,5 @@ public class Traps extends InteractiveTileObject {
     @Override
     public void onBodyHit() {
         Gdx.app.log("Trap", "Collision");
-        System.out.println(getCell());
     }
 }

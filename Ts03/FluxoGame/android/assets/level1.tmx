@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="125">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="134">
  <tileset firstgid="1" name="terrain" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="terrain.png" width="1024" height="1024"/>
  </tileset>
@@ -49,7 +49,7 @@
   <object id="79" x="1828" y="161.583" width="60.6667" height="46.4167"/>
   <object id="80" x="1888.7" y="153.105" width="15.625" height="55.5625"/>
   <object id="81" x="1904.17" y="113.333" width="57.8333" height="94.6667"/>
-  <object id="82" x="2004.5" y="65.4167" width="119.5" height="25.9167"/>
+  <object id="82" x="2004.5" y="73.4167" width="119.5" height="17.9167"/>
   <object id="83" x="1961.82" y="160.205" width="80.6667" height="47.9167"/>
   <object id="96" x="2176.55" y="143.333" width="30.7273" height="64"/>
   <object id="97" x="2256.67" y="143.333" width="30" height="64"/>
@@ -62,10 +62,10 @@
   <object id="114" x="343" y="68" width="20" height="21"/>
  </objectgroup>
  <objectgroup name="placas" offsetx="0" offsety="-1.33333">
-  <object id="88" x="2048" y="31.3333" width="32" height="32.6667"/>
-  <object id="95" x="1038.67" y="32" width="33.3333" height="30.6667"/>
+  <object id="95" x="1040" y="32.3333" width="32.3333" height="33"/>
   <object id="110" x="3359.33" y="33.3333" width="32" height="28.6667"/>
   <object id="124" x="399.5" y="49.1667" width="32.3334" height="31.6667"/>
+  <object id="132" x="2048.5" y="32" width="31" height="33.6667"/>
  </objectgroup>
  <objectgroup name="traps">
   <object id="62" x="832" y="191.5" width="48" height="16.25"/>

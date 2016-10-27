@@ -22,9 +22,6 @@ public abstract class InteractiveTileObject {
     protected Rectangle bounds;
     protected Body body;
     
-    public int xp;
-    public int yp;
-
     protected Fixture fixture;
 
     public InteractiveTileObject(World world, TiledMap map, Rectangle bounds){
@@ -48,11 +45,7 @@ public abstract class InteractiveTileObject {
     
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(2);
-        
-       
-        xp =  (int) ((int)body.getPosition().x * FluxoGame.PPM / 16);
-        yp =  (int) ((int)body.getPosition().y * FluxoGame.PPM / 16);
-              
+
        
        return layer.getCell((int)(body.getPosition().x * FluxoGame.PPM / 16),
                              (int)(body.getPosition().y * FluxoGame.PPM / 16));
