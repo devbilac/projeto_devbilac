@@ -3,6 +3,7 @@ package br.com.ts3.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,22 +24,28 @@ import br.com.ts3.game.Tools.WorldContactListener;
 
 
 public class PlayScreen implements Screen {
-
+	//Referencias para o jogo, usado para set Screen
     private FluxoGame game;
     private TextureAtlas atlas;
 
+    //variaveis basicas da PlayScreen
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
 
+    //Tiled Map variaveis
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    //Box2D variaveis
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    //Sprites
     private Devb player;
+    
+    private Music music;
 
     public PlayScreen(FluxoGame game){
         atlas = new TextureAtlas("Devb.pack");
@@ -52,7 +59,7 @@ public class PlayScreen implements Screen {
         //Criando a HUD para o placar
         hud = new Hud(game.batch);
         
-        //Carregando o mapa ou a renderizacaoo do mapa
+        //Carregando o mapa ou a renderizacao do mapa
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1 / FluxoGame.PPM);
@@ -72,11 +79,13 @@ public class PlayScreen implements Screen {
         player = new Devb(this);
 
         world.setContactListener(new WorldContactListener());
+        
+        music = FluxoGame.manager.get("audio/music/Fluxogame.ogg", Music.class);
+        music.setLooping(true);
+        music.play();
     }
 
-    public TextureAtlas getAtlas(){
-        return atlas;
-    }
+    public TextureAtlas getAtlas(){return atlas;}
 
     @Override
     public void show() {

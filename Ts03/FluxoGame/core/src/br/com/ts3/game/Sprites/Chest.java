@@ -1,6 +1,7 @@
 package br.com.ts3.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import br.com.ts3.game.FluxoGame;
@@ -59,5 +60,6 @@ public class Chest extends InteractiveTileObject {
         }       
         
         //Hud.addScore(500);
+        FluxoGame.manager.get("audio/sounds/chest_open.wav", Sound.class).play();
     }
 }

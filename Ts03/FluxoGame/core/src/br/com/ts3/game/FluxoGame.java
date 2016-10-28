@@ -1,6 +1,9 @@
 package br.com.ts3.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import br.com.ts3.game.Screens.PlayScreen;
@@ -20,21 +23,33 @@ public class FluxoGame extends Game {
 		public static final short PASS_BIT = 16;
 		
 		public SpriteBatch batch;
+		
+		/*ATENCAO Usar AssetManager em Static, pois pode trazer problemas.*/
+		public static AssetManager manager;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		manager = new AssetManager();
+		manager.load("audio/music/Fluxogame.ogg", Music.class);
+		//manager.load("audio/sounds/coin.wav", Sound.class);
+		manager.load("audio/sounds/chest_open.wav", Sound.class);
+		manager.load("audio/sounds/door_open.wav", Sound.class);
+		manager.finishLoading();
+		
 		setScreen(new PlayScreen(this));
 	}
 
 	@Override
 	public void render () {
 		super.render();
+		//if(manager.update())
 	}
 	
 	@Override
 	public void dispose () {
 		super.dispose();
 		batch.dispose();
+		manager.dispose();
 	}
 }

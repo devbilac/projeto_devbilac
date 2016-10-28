@@ -1,6 +1,7 @@
 package br.com.ts3.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -20,5 +21,6 @@ public class Coin extends InteractiveTileObject {
     @Override
     public void onBodyHit() {
         Gdx.app.log("Coin", "Collision");
+        //FluxoGame.manager.get("audio/sounds/coin.wav", Sound.class).play();
     }
 }
