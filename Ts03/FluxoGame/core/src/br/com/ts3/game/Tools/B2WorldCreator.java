@@ -17,9 +17,7 @@ import br.com.ts3.game.Sprites.Ground;
 import br.com.ts3.game.Sprites.Porta;
 import br.com.ts3.game.Sprites.Traps;
 
-/**
- * Created by Zhaobian on 28/09/2016.
- */
+
 public class B2WorldCreator {
     public B2WorldCreator(World world, TiledMap map){
         BodyDef bdef = new BodyDef();
@@ -39,7 +37,7 @@ public class B2WorldCreator {
             new Coin(world, map, rect);
         }
 
-        //Corpo chão
+        //Corpo chao
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Ground(world, map, rect);
