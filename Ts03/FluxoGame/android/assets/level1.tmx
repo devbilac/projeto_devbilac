@@ -15,6 +15,9 @@
  <tileset firstgid="12464" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="16" tileheight="16" tilecount="12288" columns="128">
   <image source="Atlas/DungeonCrawl_ProjectUtumnoTileset.png" trans="ff00ff" width="2048" height="1536"/>
  </tileset>
+ <tileset firstgid="24752" name="tileset_chest" tilewidth="16" tileheight="16" tilecount="384" columns="24">
+  <image source="tileset_chest.png" width="384" height="256"/>
+ </tileset>
  <layer name="background" width="240" height="13">
   <data encoding="base64" compression="zlib">
    eJzt1blOw0AQxvGtgJIKI4HCUeAH4JS4jwbEKW4IdJwSR+AV0oRnQPA+vAJSnoU/IoXj2NI6TvAavuLXjGZHsyvNbLnbmFGMYRwTmMQUygHTmMEs5jCPBSzWBHNt6om4aAnLWHGgF1vr2MAmtrCNnVDOHvZxgEMc4RgnEXe2qRcWtx/S5negE10W76C9I6co4syBXmxd4BJXuMYNbkM5d7jHAx5RwhOeI+5sUy8sbj+kzR/AIIYs3qGZvSNuSfoPuFI77+L2Q6vybTSzd8QtSf8BV2q74LOnMVaNiIm0Szv2+m/UdkGfZ0y/Vx8reNn0IiLJrPrGrPn1sXPNr0guVJjdl9D8vml+RXLhw/8RjFU1vyK5oPkVya+o+S30Zt+XyH+zW5PkTMVvjL2OZH8Xkb+qONw637MaJU1/7xayfkORrHwBybbtZw==
@@ -27,7 +30,7 @@
  </layer>
  <layer name="graphics" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="escadas">

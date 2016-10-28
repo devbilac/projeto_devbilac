@@ -1,17 +1,15 @@
 package br.com.ts3.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
-
 import br.com.ts3.game.FluxoGame;
+import br.com.ts3.game.Screens.PlayScreen;
 
 
 public class Chest extends InteractiveTileObject {
-    public Chest(World world, TiledMap map, Rectangle bounds){
-        super(world, map,bounds);
+    public Chest(PlayScreen screen, Rectangle bounds){
+        super(screen,bounds);
         fixture.setUserData(this);
         setCategoryFilter(FluxoGame.CHEST_BIT);
     }
@@ -59,5 +57,7 @@ public class Chest extends InteractiveTileObject {
             layer.getCell(211, 9).setTile(null);
             layer.getCell(211,10).setTile(null);
         }       
+        
+        //Hud.addScore(500);
     }
 }

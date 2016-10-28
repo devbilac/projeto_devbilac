@@ -57,18 +57,19 @@ public class PlayScreen implements Screen {
         map = mapLoader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1 / FluxoGame.PPM);
 
-        //Inicialização da camera do game para começar no inicio do mapa
+        //Inicializacao da camera do game para comecar no inicio do mapa
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         //Criando a Box2D, setup de 0 gravidade em X, -10 gravidade em Y, 
         world = new World(new Vector2(0,-10), true);
+        
         //Debugando os Box2D para ver as linhas
         b2dr = new Box2DDebugRenderer();
 
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(this);
 
         //Criando o Devb no jogo
-        player = new Devb(world, this);
+        player = new Devb(this);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -95,16 +96,23 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt){
+    	//Comandos input do usuario
         handleInput(dt);
 
+        //Um passo na simulacao fisica(60 vezes por segundos)
         world.step(1/60f, 6, 2);
 
         player.update(dt);
+        hud.update(dt);
 
+        //Anexando a camera do jogo ao jogador na coordenada x e y
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
 
+        //Atualiza a camera do jogo conforme ele muda
         gameCam.update();
+        
+        //Dizer ao nosso renderizador para desenhar apenas o que a nossa camera pode ver em nosso mundo de jogo.
         renderer.setView(gameCam);
     }
 
@@ -120,8 +128,9 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
+        
         //colocar textura no jogo
-        // game.batch.draw(new Texture(""),0,0);
+        //game.batch.draw(new Texture(""),0,0);
         
         player.draw(game.batch);
         game.batch.end();
@@ -136,6 +145,14 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+    }
+    
+    public TiledMap getMap(){
+    	return map;
+    }
+    
+    public World getWorld(){
+    	return world;
     }
 
     @Override

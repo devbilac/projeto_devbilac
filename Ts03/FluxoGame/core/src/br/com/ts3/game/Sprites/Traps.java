@@ -1,14 +1,13 @@
 package br.com.ts3.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
+import br.com.ts3.game.Screens.PlayScreen;
 
 
 public class Traps extends InteractiveTileObject {
-    public Traps(World world, TiledMap map, Rectangle bounds){
-        super(world, map, bounds);
+    public Traps(PlayScreen screen, Rectangle bounds){
+        super(screen, bounds);
         fixture.setUserData(this);
     }
 

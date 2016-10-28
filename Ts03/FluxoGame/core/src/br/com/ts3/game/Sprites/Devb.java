@@ -26,9 +26,9 @@ public class Devb extends Sprite {
     private float stateTimer;
     private boolean runningRight;
 
-    public Devb(World world, PlayScreen screen){
+    public Devb(PlayScreen screen){
         super(screen.getAtlas().findRegion("right"));
-        this.world = world;
+        this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
