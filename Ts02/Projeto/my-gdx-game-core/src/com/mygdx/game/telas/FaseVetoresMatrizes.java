@@ -38,7 +38,7 @@ public class FaseVetoresMatrizes implements Screen {
 		map = new TmxMapLoader().load("mapas/fase_vetores_matrizes.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
 		camera = new OrthographicCamera();
-		player=new Player(new Sprite(new Texture("img/player.png"));
+	//	player=new Player(new Sprite(new Texture("img/player.png"));
        // atlas = new TextureAtlas("images/Mario_And_Enemies.pack");
 		
 		this.game = game;

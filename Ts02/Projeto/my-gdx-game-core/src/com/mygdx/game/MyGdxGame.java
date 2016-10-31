@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.telas.CriarConta;
 import com.mygdx.game.telas.FaseVetoresMatrizes;
 import com.mygdx.game.telas.Login;
+import com.mygdx.game.telas.MainMenu;
 import com.mygdx.game.telas.Splash;
 
 
@@ -18,7 +19,7 @@ public SpriteBatch batch;
 	
 	@Override
 	public void create () {
-    setScreen(new FaseVetoresMatrizes());
+    setScreen(new MainMenu());
     batch = new SpriteBatch();
 		
 	}

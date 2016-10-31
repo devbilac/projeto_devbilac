@@ -52,7 +52,7 @@ public class MainMenu implements Screen {
 			}
 		});
 		buttonExit.pad(15);
-		buttonPlay= new  TextButton("Opções",skin);
+		buttonPlay= new  TextButton("Recordes",skin);
 		buttonPlay.addListener(new ClickListener(){
 			public void clicked(InputEvent event,float x ,float y){  //evento do botão Novo Jogo 
 				((Game)Gdx.app.getApplicationListener()).setScreen(new Login());
@@ -99,18 +99,18 @@ public class MainMenu implements Screen {
 		//.push(Tween.to(heading,ActorAccessor.RGB,5f).target(1,1,1))
 	//	.end().repeat(Tween.INFINITY,0).start(tweenManager);
 		// criando animações dos botoes
-		tweenManager = new TweenManager();
-		Tween.registerAccessor(Actor.class,new ActorAccessor());
-		Timeline.createSequence().beginSequence()
-		.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
-		.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
-		.push(Tween.from(heading, ActorAccessor.ALPHA,.5F).target(0))
-		.push(Tween.to(buttonPlay, ActorAccessor.ALPHA,.5F).target(1))
-		.push(Tween.to(buttonExit, ActorAccessor.ALPHA,.5F).target(1))
-		.end().start(tweenManager);
+	//	tweenManager = new TweenManager();
+	//	Tween.registerAccessor(Actor.class,new ActorAccessor());
+	//	Timeline.createSequence().beginSequence()
+	//	.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
+	//	.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
+	//	.push(Tween.from(heading, ActorAccessor.ALPHA,.5F).target(0))
+	//	.push(Tween.to(buttonPlay, ActorAccessor.ALPHA,.5F).target(1))
+	//	.push(Tween.to(buttonExit, ActorAccessor.ALPHA,.5F).target(1))
+	//	.end().start(tweenManager);
 		//animação da tabela
-		Tween.from(table,ActorAccessor.ALPHA,.5F).target(0).start(tweenManager);
-		Tween.from(table,ActorAccessor.ALPHA,.5F).target(Gdx.graphics.getHeight()/8).start(tweenManager);
+	//	Tween.from(table,ActorAccessor.ALPHA,.5F).target(0).start(tweenManager);
+	//	Tween.from(table,ActorAccessor.ALPHA,.5F).target(Gdx.graphics.getHeight()/8).start(tweenManager);
 	//	tweenManager.update(Gdx.graphics.getDeltaTime());
 		
 	}
@@ -120,7 +120,7 @@ public class MainMenu implements Screen {
 		Gdx.gl.glClearColor(0,0,0,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//table.drawDebug(stage); //acionar linhas da tabela 
-		tweenManager.update(delta);
+	//	tweenManager.update(delta);
 		stage.act(delta);
 		stage.draw();
 		

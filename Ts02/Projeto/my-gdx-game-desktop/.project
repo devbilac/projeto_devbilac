@@ -84,12 +84,12 @@
 		<link>
 			<name>assets/img/img4.png</name>
 			<type>1</type>
-			<location>C:/Users/Aldeir/Desktop/my-gdx-game-core/assets/img/img4.png</location>
+			<location>C:/Users/Aldeir/Desktop/core/assets/img/img4.png</location>
 		</link>
 		<link>
 			<name>assets/img/img5.png</name>
 			<type>1</type>
-			<location>C:/Users/Aldeir/Desktop/test/core/assets/img/img5.png</location>
+			<location>C:/Users/Aldeir/Desktop/core/assets/img/img5.png</location>
 		</link>
 		<link>
 			<name>assets/ui/atlas.pack</name>
