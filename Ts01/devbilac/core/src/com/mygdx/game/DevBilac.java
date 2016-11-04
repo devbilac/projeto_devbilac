@@ -9,7 +9,7 @@ import Screens.ScreenUs07;
 public class DevBilac extends Game {
 	public static final int V_WIDHT = 400;
 	public static final int V_HEIGHT = 208;
-	public static final float PPM = 100;
+	public static final float PPM = 1;
 	public SpriteBatch batch;
 	
 	@Override

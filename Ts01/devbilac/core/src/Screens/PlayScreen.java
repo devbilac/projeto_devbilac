@@ -70,7 +70,7 @@ public class PlayScreen implements Screen {
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / DevBilac.PPM);
 		
 		//Alterar para mudar a Gravidade do mundo
-		world = new World(new Vector2(0,-10), true);
+		world = new World(new Vector2(0,-200), true);
 		b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(this);
 		player = new Player(this);
@@ -97,13 +97,13 @@ public class PlayScreen implements Screen {
 	//Metodo para receber as ações do teclado.
 	public void handleInput(float dt){
 		if ((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isKeyPressed(Keys.UP)) && player.b2body.getLinearVelocity().y == 0f){
-			player.b2body.applyLinearImpulse(new Vector2(0, 3.25f), player.b2body.getWorldCenter(), true);
+			player.b2body.applyLinearImpulse(new Vector2(0,400), player.b2body.getWorldCenter(), true);
 		}
             
-        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))  && player.b2body.getLinearVelocity().x <=1.2)
-        	player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >=-1.2)
-        	player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))  && player.b2body.getLinearVelocity().x <=100)
+        	player.b2body.applyLinearImpulse(new Vector2(100, 0), player.b2body.getWorldCenter(), true);
+        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >=-100)
+        	player.b2body.applyLinearImpulse(new Vector2(-100, 0), player.b2body.getWorldCenter(), true);
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
         	//Problema no Dispose();
         	//dispose();
@@ -131,12 +131,12 @@ public class PlayScreen implements Screen {
 		}
 		gamecam.position.x = player.b2body.getPosition().x; //Camera segue a posição do personagem
 		//inicio do mapa +2
-		if(gamecam.position.x < 2){
-			gamecam.position.x =  2;
+		if(gamecam.position.x < 0){
+			gamecam.position.x =  0;
 		}
 		//fim do mapa -2
-		if(gamecam.position.x > 36){
-			gamecam.position.x =  36;
+		if(gamecam.position.x > 3600){
+			gamecam.position.x =  3600;
 		}
 		gamecam.update();
 		renderer.setView(gamecam);
@@ -157,6 +157,13 @@ public class PlayScreen implements Screen {
 		for(Professor professor : professores){
 			System.out.println(professor.getId());
 			professor.draw(game.batch);
+			if(professor.isInteracao()){
+				float tamanhoTelaW = gamecam.viewportWidth;
+				float aux = player.b2body.getPosition().x + (tamanhoTelaW/2 - (120));
+				System.out.println(aux);
+				game.batch.draw(professor.getTPreview(),aux, 10);
+				//professor.getFont().draw(game.batch,professor.getTextoChat(), professor.b2body.getPosition().x, professor.b2body.getPosition().y);
+			}
 		}
 		game.batch.end();
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -209,7 +216,7 @@ public class PlayScreen implements Screen {
 
 	public void criarProfessor(){
 		String[] nomes = {"Angela","André","Gerson"};
-		Vector2[] position = {new Vector2(2,(float)2.14),new Vector2(5,(float)2.14),new Vector2(7,(float)2.14)};
+		Vector2[] position = {new Vector2(20,(float)21),new Vector2(200,(float)21),new Vector2(400,(float)21)};
 		for (int i = 0; i < nomes.length; i++) {
 			Professor professor = new Professor(this, position[i].x, position[i].y);
 			professor.setId(i);
@@ -218,22 +225,27 @@ public class PlayScreen implements Screen {
 			professor.setTPreview(new Texture("images/Professor-preview.png"));
 			professor.setTChat(new Texture("images/Chat01.png"));
 			professor.setTextoChat("OLÁ TUDO BEM ? EU IREI ENSINA-LO AS VARIAVEIS BASICAS - MODULO I.");
+			professor.setInteracao(false);
 			professores.add(professor);
 		}
 	}
 	//Metodo para verificar se o Usuario esta Perto de algum Npc.
 	private void verificarNpc() {
 		for(Professor professor : professores){
-			if((player.b2body.getPosition().x >= professor.b2body.getPosition().x-0.3) &&(player.b2body.getPosition().x <= (professor.b2body.getPosition().x+0.3))){
+			if((player.b2body.getPosition().x >= professor.b2body.getPosition().x-50) &&(player.b2body.getPosition().x <= (professor.b2body.getPosition().x+50))){
 				System.out.println(professor.getNome());
-				int NivelPlayer = 10;
-				if(NivelPlayer > professor.getNivel()){
+				int NivelPlayer = 1;
+				if(NivelPlayer >= professor.getNivel()){
 					System.out.println("VOCÊ TEM ACESSO A ESSE NPC!");
+					professor.setInteracao(true);
 				}else{
+					professor.setInteracao(false);
 					System.out.println("VOCÊ NÃO TEM ACESSO A ESSE NPC!");
 				}
+			}else{
+				professor.setInteracao(false);
 			}
 		}
-		
+
 	}
 }
