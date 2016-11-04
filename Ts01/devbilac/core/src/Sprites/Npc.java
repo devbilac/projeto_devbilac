@@ -15,10 +15,10 @@ public abstract class Npc extends Sprite {
 		this.world = screen.getWorld();
 		this.screen = screen;
 		setPosition(x,y);
-		defineNpc();
+		defineNpc(x,y);
 		
 	}
-	protected abstract void defineNpc();
+	protected abstract void defineNpc(float x, float y);
 	
 	
 }

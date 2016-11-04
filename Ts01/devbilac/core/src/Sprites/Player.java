@@ -104,7 +104,7 @@ public class Player extends Sprite{
 		
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(6 / DevBilac.PPM);
+		shape.setRadius(10 / DevBilac.PPM);
 		
 		fdef.shape = shape;
 		b2body.createFixture(fdef);

@@ -1,5 +1,7 @@
 package Screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -27,6 +30,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.Hud;
+import Sprites.Circulo;
 import Sprites.Player;
 import Sprites.Professor;
 import Tools.B2WorldCreator;
@@ -49,7 +53,7 @@ public class PlayScreen implements Screen {
 	private Box2DDebugRenderer b2dr;
 	//Sprites
 	private Player player;
-	private Professor professor;
+	ArrayList<Professor> professores = new ArrayList<Professor>();
 	
 	public PlayScreen(DevBilac game){
 		atlas = new TextureAtlas("images/Mario_And_Enemies.pack");
@@ -66,7 +70,7 @@ public class PlayScreen implements Screen {
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / DevBilac.PPM);
 		
 		//Alterar para mudar a Gravidade do mundo
-		world = new World(new Vector2(0,-200 / DevBilac.PPM), true);
+		world = new World(new Vector2(0,-10), true);
 		b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(this);
 		player = new Player(this);
@@ -75,7 +79,7 @@ public class PlayScreen implements Screen {
 		music.setLooping(true); // Looping da Musica
 		music.setVolume(0.1f); // Volume da Musica 0.1f = 10%
 		music.play(); // Play Musica ...
-		professor = new Professor(this, 32, 32f);
+		criarProfessor();
 		
 	}
 	
@@ -92,14 +96,13 @@ public class PlayScreen implements Screen {
 	}
 	//Metodo para receber as ações do teclado.
 	public void handleInput(float dt){
-		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isKeyPressed(Keys.UP)){
-			player.b2body.applyLinearImpulse(new Vector2(0,0.1f), player.b2body.getWorldCenter(), true);
-			
+		if ((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isKeyPressed(Keys.UP)) && player.b2body.getLinearVelocity().y == 0f){
+			player.b2body.applyLinearImpulse(new Vector2(0, 3.25f), player.b2body.getWorldCenter(), true);
 		}
             
-        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) && player.b2body.getLinearVelocity().x <= 2)
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >= -2)
+        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))  && player.b2body.getLinearVelocity().x <=1.2)
+        	player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >=-1.2)
         	player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
         	//Problema no Dispose();
@@ -113,7 +116,8 @@ public class PlayScreen implements Screen {
         		System.out.println("Menu Falso");
         		menu = false;
         	}*/
-        	System.out.println("Play ESQ");
+        	game.setScreen(new ScreenUs05(game));
+        	//dispose();
         }
         	
 	}
@@ -122,13 +126,24 @@ public class PlayScreen implements Screen {
 		handleInput(dt);
 		world.step(1/60f, 6, 2);
 		player.update(dt);
-		professor.update(dt);
+		for(Professor professor : professores){
+			professor.update(dt);
+		}
 		gamecam.position.x = player.b2body.getPosition().x; //Camera segue a posição do personagem
+		//inicio do mapa +2
+		if(gamecam.position.x < 2){
+			gamecam.position.x =  2;
+		}
+		//fim do mapa -2
+		if(gamecam.position.x > 36){
+			gamecam.position.x =  36;
+		}
 		gamecam.update();
 		renderer.setView(gamecam);
+		verificarNpc();
 	}
 	
-	
+
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -139,7 +154,10 @@ public class PlayScreen implements Screen {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		player.draw(game.batch);
-		professor.draw(game.batch);
+		for(Professor professor : professores){
+			System.out.println(professor.getId());
+			professor.draw(game.batch);
+		}
 		game.batch.end();
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
@@ -182,11 +200,40 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		map.dispose();
-		renderer.dispose();
-		world.dispose();
-		b2dr.dispose();
-		hud.dispose();
+        this.map.dispose();
+        this.renderer.dispose();
+        this.world.dispose();
+        this.b2dr.dispose();
+        this.hud.dispose();
 	}
 
+	public void criarProfessor(){
+		String[] nomes = {"Angela","André","Gerson"};
+		Vector2[] position = {new Vector2(2,(float)2.14),new Vector2(5,(float)2.14),new Vector2(7,(float)2.14)};
+		for (int i = 0; i < nomes.length; i++) {
+			Professor professor = new Professor(this, position[i].x, position[i].y);
+			professor.setId(i);
+			professor.setNome(nomes[i]);
+			professor.setNivel(i);
+			professor.setTPreview(new Texture("images/Professor-preview.png"));
+			professor.setTChat(new Texture("images/Chat01.png"));
+			professor.setTextoChat("OLÁ TUDO BEM ? EU IREI ENSINA-LO AS VARIAVEIS BASICAS - MODULO I.");
+			professores.add(professor);
+		}
+	}
+	//Metodo para verificar se o Usuario esta Perto de algum Npc.
+	private void verificarNpc() {
+		for(Professor professor : professores){
+			if((player.b2body.getPosition().x >= professor.b2body.getPosition().x-0.3) &&(player.b2body.getPosition().x <= (professor.b2body.getPosition().x+0.3))){
+				System.out.println(professor.getNome());
+				int NivelPlayer = 10;
+				if(NivelPlayer > professor.getNivel()){
+					System.out.println("VOCÊ TEM ACESSO A ESSE NPC!");
+				}else{
+					System.out.println("VOCÊ NÃO TEM ACESSO A ESSE NPC!");
+				}
+			}
+		}
+		
+	}
 }

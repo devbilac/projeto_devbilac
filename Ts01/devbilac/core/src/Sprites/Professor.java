@@ -1,6 +1,8 @@
 package Sprites;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -14,7 +16,32 @@ public class Professor extends Npc {
 	private float stateTime;
 	private Animation walkAnimation;
 	private Array<TextureRegion> frames;
+	private String nome;
+	private int id;
+	private int nivel;
+	private Texture TPreview;
+	private Texture TChat;
+	private String TextoChat;
+	private BitmapFont font;
+	private boolean interacao;
 	
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int i) {
+		this.id = i;
+	}
+
 	public Professor(PlayScreen screen, float x, float y) {
 		super(screen, x, y);
 		frames = new Array<TextureRegion>();
@@ -33,9 +60,10 @@ public class Professor extends Npc {
 	}
 	
 	@Override
-	protected void defineNpc() {
+	protected void defineNpc(float x, float y) {
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(32 / DevBilac.PPM,32 / DevBilac.PPM);
+		bdef.position.set(x,y);
+		//bdef.type = BodyDef.BodyType.DynamicBody;
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
 		
@@ -46,6 +74,54 @@ public class Professor extends Npc {
 		fdef.shape = shape;
 		b2body.createFixture(fdef);
 		
+	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
+
+	public Texture getTPreview() {
+		return TPreview;
+	}
+
+	public void setTPreview(Texture tPreview) {
+		TPreview = tPreview;
+	}
+
+	public Texture getTChat() {
+		return TChat;
+	}
+
+	public void setTChat(Texture tChat) {
+		TChat = tChat;
+	}
+
+	public String getTextoChat() {
+		return TextoChat;
+	}
+
+	public void setTextoChat(String textoChat) {
+		TextoChat = textoChat;
+	}
+
+	public BitmapFont getFont() {
+		return font;
+	}
+
+	public void setFont(BitmapFont font) {
+		this.font = font;
+	}
+
+	public boolean isInteracao() {
+		return interacao;
+	}
+
+	public void setInteracao(boolean interacao) {
+		this.interacao = interacao;
 	}
 
 }
