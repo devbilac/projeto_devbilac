@@ -99,11 +99,12 @@ public class PlayScreen implements Screen {
 		if ((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isKeyPressed(Keys.UP)) && player.b2body.getLinearVelocity().y == 0f){
 			player.b2body.applyLinearImpulse(new Vector2(0,400), player.b2body.getWorldCenter(), true);
 		}
-            
-        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))  && player.b2body.getLinearVelocity().x <=100)
+        if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))  && player.b2body.getLinearVelocity().x <=100){
         	player.b2body.applyLinearImpulse(new Vector2(100, 0), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >=-100)
+        }
+        if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) && player.b2body.getLinearVelocity().x >=-100){
         	player.b2body.applyLinearImpulse(new Vector2(-100, 0), player.b2body.getWorldCenter(), true);
+        }
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
         	//Problema no Dispose();
         	//dispose();
@@ -157,9 +158,12 @@ public class PlayScreen implements Screen {
 		for(Professor professor : professores){
 			System.out.println(professor.getId());
 			professor.draw(game.batch);
+			
+		}
+		for(Professor professor : professores){
 			if(professor.isInteracao()){
 				float tamanhoTelaW = gamecam.viewportWidth;
-				float aux = player.b2body.getPosition().x + (tamanhoTelaW/2 - (120));
+				float aux = player.b2body.getPosition().x + (tamanhoTelaW/2 - (professor.getTPreview().getWidth()));
 				System.out.println(aux);
 				game.batch.draw(professor.getTPreview(),aux, 10);
 				//professor.getFont().draw(game.batch,professor.getTextoChat(), professor.b2body.getPosition().x, professor.b2body.getPosition().y);
