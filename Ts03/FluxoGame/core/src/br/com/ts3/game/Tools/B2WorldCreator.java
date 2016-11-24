@@ -13,7 +13,6 @@ import br.com.ts3.game.FluxoGame;
 import br.com.ts3.game.Screens.PlayScreen;
 import br.com.ts3.game.Sprites.Chest;
 import br.com.ts3.game.Sprites.Coin;
-import br.com.ts3.game.Sprites.Escada;
 import br.com.ts3.game.Sprites.Porta;
 import br.com.ts3.game.Sprites.Traps;
 
@@ -29,20 +28,15 @@ public class B2WorldCreator {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        //Escadas
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Escada(screen, rect);
-        }
-
+        
         //Moedas
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Coin(screen, rect);
         }
 
         //Corpo chao
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -56,19 +50,19 @@ public class B2WorldCreator {
         }
 
         //Placas
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Chest(screen, rect);
         }
 
         //Traps
-        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Traps(screen, rect);
         }
 
         //Porta
-        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Porta(screen, rect);
         }

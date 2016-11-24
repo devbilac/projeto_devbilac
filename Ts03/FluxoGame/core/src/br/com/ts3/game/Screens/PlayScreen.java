@@ -94,8 +94,10 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt){
         //Configurando a tecla do movimento do Devb, a velocidade e o impulso do pulo.
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= 3.25f)
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= 3.25f){
+        	
             player.b2body.applyLinearImpulse(new Vector2(0, 3.25f), player.b2body.getWorldCenter(), true);
+        }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <=1.2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);

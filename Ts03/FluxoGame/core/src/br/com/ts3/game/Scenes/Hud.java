@@ -81,10 +81,10 @@ public class Hud implements Disposable{
     	}
     }
     
-   /* public static void addScore(int value){
+   public static void addScore(int value){
     	score += value;
     	scoreLabel.setText(String.format("%06d", score));
-    }*/
+    }
 
     @Override
     public void dispose() {
