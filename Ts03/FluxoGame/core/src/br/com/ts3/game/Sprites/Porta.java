@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 import br.com.ts3.game.FluxoGame;
+import br.com.ts3.game.Scenes.Hud;
 import br.com.ts3.game.Screens.PlayScreen;
 
 public class Porta extends InteractiveTileObject {
@@ -17,6 +18,11 @@ public class Porta extends InteractiveTileObject {
     @Override
     public void onBodyHit() {
         Gdx.app.log("Door", "Collision");
-        FluxoGame.manager.get("audio/sounds/door_open.wav", Sound.class).play();
+        //debugando chest collision
+        System.out.println(PlayScreen.getCheck());
+        if(PlayScreen.getCheck() == 4){
+            Hud.addScore(1000);
+            FluxoGame.manager.get("audio/sounds/door_open.wav", Sound.class).play();
+        }
     }
 }

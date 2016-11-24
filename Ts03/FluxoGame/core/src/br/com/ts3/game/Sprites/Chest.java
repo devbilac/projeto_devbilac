@@ -60,6 +60,9 @@ public class Chest extends InteractiveTileObject {
             layer.getCell(211,10).setTile(null);
         }       
         
+        //adicionando valores quando os baus sao coletados
+        PlayScreen.setCheck(PlayScreen.getCheck()+1);
+        
         Hud.addScore(500);
         FluxoGame.manager.get("audio/sounds/chest_open.wav", Sound.class).play();
     }

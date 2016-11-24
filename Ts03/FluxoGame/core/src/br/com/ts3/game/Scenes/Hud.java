@@ -20,7 +20,7 @@ public class Hud implements Disposable{
     private Viewport viewport;
 
     //Variaveis de tempo e pontuacao 
-    private Integer worldTimer;
+    private static Integer worldTimer;
     private float timeCount;
     private static Integer score;
 
@@ -83,6 +83,7 @@ public class Hud implements Disposable{
     
    public static void addScore(int value){
     	score += value;
+    	score += worldTimer;
     	scoreLabel.setText(String.format("%06d", score));
     }
 

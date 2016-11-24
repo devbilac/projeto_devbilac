@@ -1,5 +1,7 @@
 package br.com.ts3.game.Screens;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -46,6 +48,8 @@ public class PlayScreen implements Screen {
     private Devb player;
     
     private Music music;
+    
+    static int check = 0;
 
     public PlayScreen(FluxoGame game){
         atlas = new TextureAtlas("Devb.pack");
@@ -191,4 +195,14 @@ public class PlayScreen implements Screen {
     }
 
     public Hud getHud(){ return hud;}
+
+	public static int getCheck() {
+		return check;
+	}
+
+	public static void setCheck(int check) {
+		PlayScreen.check = check;
+	}
+    
+    
 }
