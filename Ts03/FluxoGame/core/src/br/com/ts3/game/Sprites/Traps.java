@@ -10,6 +10,10 @@ public class Traps extends InteractiveTileObject {
         super(screen, bounds);
         fixture.setUserData(this);
     }
+    
+    public void update(float dt){
+    	
+    }
 
     @Override
     public void onBodyHit() {

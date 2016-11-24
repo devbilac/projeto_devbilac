@@ -1,7 +1,5 @@
 package br.com.ts3.game.Screens;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;

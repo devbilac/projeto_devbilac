@@ -15,16 +15,18 @@ import br.com.ts3.game.Screens.PlayScreen;
 
 
 public class Devb extends Sprite {
-    public enum State { FALLING, JUMPING, STANDING, RUNNING };
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD };
     public State currentState;
     public State previousState;
     public World world;
     public Body b2body;
     private TextureRegion devbStand;
+    private TextureRegion devbDead;
     private Animation devbRun;
     private Animation devbJump;
     private float stateTimer;
     private boolean runningRight;
+    private boolean devbIsDead;
 
     public Devb(PlayScreen screen){
         super(screen.getAtlas().findRegion("right"));
@@ -35,15 +37,20 @@ public class Devb extends Sprite {
         runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
+        //Animacao do boneco quando se move
         for(int i = 1; i < 8; i++)
-            frames.add(new TextureRegion(getTexture(), i*88, 91, 80, 80));
+        	frames.add(new TextureRegion(screen.getAtlas().findRegion("left"), i*88, 91, 80, 80));
         devbRun = new Animation(0.1f, frames);
         frames.clear();
 
+        //Devb Pulando
         for(int i = 1; i< 7; i++)
-            frames.add(new TextureRegion(getTexture(), i*86, 270, 80,80));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("left"), i*86, 270, 80,80));
         devbJump = new Animation(0.1f, frames);
 
+        
+        devbDead = new TextureRegion(screen.getAtlas().findRegion("left"), 250, 270, 80, 80);
+        
         devbStand = new TextureRegion(getTexture(), 5, 91, 80,80);
 
         defineDevb();
@@ -61,6 +68,7 @@ public class Devb extends Sprite {
 
         TextureRegion region;
         switch (currentState){
+
             case JUMPING:
                 region = devbJump.getKeyFrame(stateTimer);
                 break;

@@ -23,6 +23,7 @@ public class Porta extends InteractiveTileObject {
         if(PlayScreen.getCheck() == 4){
             Hud.addScore(1000);
             FluxoGame.manager.get("audio/sounds/door_open.wav", Sound.class).play();
+            
         }
     }
 }
