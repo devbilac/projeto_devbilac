@@ -76,7 +76,7 @@ public class ScreenUs04 implements Screen {
         world = new World(new Vector2(0,-10), true);
         
         //Debugando os Box2D para ver as linhas
-        b2dr = new Box2DDebugRenderer();
+        //b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreatorUs04(this);
 

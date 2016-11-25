@@ -44,14 +44,16 @@ public class Professor extends Npc {
 
 	public Professor(PlayScreen screen, float x, float y) {
 		super(screen, x, y);
-		frames = new Array<TextureRegion>();
-		for(int i = 0;i<2;i++){
-			frames.add(new TextureRegion(screen.getAtlas().findRegion("goomba"), i*16, 1, 16,16));
-		}
-		walkAnimation = new Animation(0.4f, frames);
-		stateTime = 0;
-		setBounds(getX(), getY(), 16 / DevBilac.PPM, 16 / DevBilac.PPM);
-	}
+		
+		 Array<TextureRegion> frames = new Array<TextureRegion>();
+	        //Animacao do boneco quando se move
+	        for(int i = 1; i < 8; i++)
+	        	frames.add(new TextureRegion(screen.getAtlas().findRegion("left"), i*88, 91, 80, 80));
+	        walkAnimation = new Animation(0.5f, frames);
+	        frames.clear();
+
+	        setBounds(0, 0, 32 / DevBilac.PPM, 32 / DevBilac.PPM);
+	    }
 
 	public void update(float dt){
 		stateTime += dt;
@@ -62,17 +64,27 @@ public class Professor extends Npc {
 	@Override
 	protected void defineNpc(float x, float y) {
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(x,y);
-		//bdef.type = BodyDef.BodyType.DynamicBody;
-		bdef.type = BodyDef.BodyType.DynamicBody;
-		b2body = world.createBody(bdef);
-		
-		FixtureDef fdef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-		shape.setRadius(6 / DevBilac.PPM);
-		
-		fdef.shape = shape;
-		b2body.createFixture(fdef);
+        bdef.position.set(x, y);
+        bdef.type = BodyDef.BodyType.StaticBody;
+
+        b2body = world.createBody(bdef);
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(10 / DevBilac.PPM);
+        fdef.filter.categoryBits = DevBilac.DEFAULT_BIT;
+        fdef.filter.maskBits = DevBilac.DEFAULT_BIT | DevBilac.CHEST_BIT | DevBilac.ESCADA_BIT;
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef);
+
+        CircleShape body = new CircleShape();
+        body.setRadius(10 / DevBilac.PPM);
+        //new Vector2(-9 / FluxoGame.PPM, 9 / FluxoGame.PPM), new Vector2(9 / FluxoGame.PPM, 9 / FluxoGame.PPM)
+        fdef.shape = body;
+        fdef.isSensor = true;
+
+        b2body.createFixture(fdef).setUserData("body");
+
 		
 	}
 

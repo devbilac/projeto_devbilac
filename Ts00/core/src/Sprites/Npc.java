@@ -12,6 +12,7 @@ public abstract class Npc extends Sprite {
 	public Body b2body;
 
 	public Npc(PlayScreen screen, float x, float y) {
+		super(screen.getAtlas().findRegion("right"));
 		this.world = screen.getWorld();
 		this.screen = screen;
 		setPosition(x,y);

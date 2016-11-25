@@ -1,13 +1,17 @@
 package Screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -25,7 +29,8 @@ import Sprites.Player;
 import Tools.B2WorldCreator;
 import Tools.B2WorldCreatorUs04;
 import Tools.WorldContactListener;
-
+import Sprites.EnsinoTeorico;
+import Sprites.Professor;
 
 public class PlayScreen implements Screen {
 	//Referencias para o jogo, usado para set Screen
@@ -52,7 +57,9 @@ public class PlayScreen implements Screen {
     private Music music;
     
     static int check = 0;
-    //
+ // Sprites
+ 	ArrayList<Professor> professores = new ArrayList<Professor>();
+ 	ArrayList<EnsinoTeorico> ensinoTeorico = new ArrayList<EnsinoTeorico>();
 	public static AssetManager manager;
     public PlayScreen(DevBilac game){
         atlas = new TextureAtlas("Devb.pack");
@@ -86,10 +93,12 @@ public class PlayScreen implements Screen {
         player = new Player(this);
 
         world.setContactListener(new WorldContactListener());
-
-       /* music = DevBilac.manager.get("audio/music/Fluxogame.ogg", Music.class);
-        music.setLooping(true);
-        music.play();*/
+        music = Gdx.audio.newMusic(Gdx.files.internal("audio/Theme01.mp3"));
+		music.setLooping(true); // Looping da Musica
+		music.setVolume(0.1f); // Volume da Musica 0.1f = 10%
+		music.play(); // Play Musica ...
+		criarProfessor();
+		criarEnsinos();
     }
 
     public TextureAtlas getAtlas(){return atlas;}
@@ -101,15 +110,19 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt){
         //Configurando a tecla do movimento do Devb, a velocidade e o impulso do pulo.
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= 3.25f){
+    	if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= 1.0F){
         	
             player.b2body.applyLinearImpulse(new Vector2(0, 3.25f), player.b2body.getWorldCenter(), true);
         }
+		if(Gdx.input.isKeyPressed(Keys.W) && player.b2body.getLinearVelocity().y <= 1.0f){
+        	
+            player.b2body.applyLinearImpulse(new Vector2(0, 2.00f), player.b2body.getWorldCenter(), true);
+        }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <=1.2)
+        if((Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && player.b2body.getLinearVelocity().x <=1.2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >=-1.2)
+        if((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && player.b2body.getLinearVelocity().x >=-1.2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
     }
 
@@ -121,6 +134,9 @@ public class PlayScreen implements Screen {
         world.step(1/60f, 6, 2);
 
         player.update(dt);
+        for (Professor professor : professores) {
+			professor.update(dt);
+		}
         hud.update(dt);
 
         //Anexando a camera do jogo ao jogador na coordenada x e y
@@ -159,8 +175,34 @@ public class PlayScreen implements Screen {
         //colocar textura no jogo
         //game.batch.draw(new Texture(""),0,0);
         
+        for (Professor professor : professores) {
+			// System.out.println(professor.getId());
+			professor.draw(game.batch);
+
+		}
+		for (Professor professor : professores) {
+			if (professor.isInteracao()) {
+				float tamanhoTelaW = gameCam.viewportWidth;
+				float aux = player.b2body.getPosition().x + (tamanhoTelaW / 2 - (professor.getTPreview().getWidth()));
+				// System.out.println(aux);
+				game.batch.draw(professor.getTPreview(), aux, 10);
+
+				// professor.getFont().draw(game.batch,professor.getTextoChat(),
+				// professor.b2body.getPosition().x,
+				// professor.b2body.getPosition().y);
+				// Parte de ensino teorico
+				if (Gdx.input.isKeyPressed(Keys.X)) {
+					// Conversando
+					// Exibir conteudo na tela.;
+					// System.out.println("ESTOU CONVERSANDO COM O NPC!!!");
+					game.setScreen(ensinoTeorico.get(professor.getId()).getTela());
+					this.dispose();
+				}
+
+			}
+		}
         player.draw(game.batch);
-        game.batch.end();
+		game.batch.end();
         
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -216,6 +258,60 @@ public class PlayScreen implements Screen {
 	public static void setCheck(int check) {
 		ScreenUs04.check = check;
 	}
-    
+	public void criarProfessor() {
+		String[] nomes = { "Angela", "André", "Gerson","Luiz Fernando","Eduardo Alves" };
+		Vector2[] position = { 
+				new Vector2((float) 5.16, (float)0.4),
+				new Vector2((float)8.80,(float)0.3),
+				new Vector2((float)13.3, (float)0.3),
+				new Vector2((float)16.65, (float)0.3),
+				new Vector2((float)20.80, (float)0.3) };
+		for (int i = 0; i < nomes.length; i++) {
+			Professor professor = new Professor(this, position[i].x, position[i].y);
+			professor.setId(i);
+			professor.setNome(nomes[i]);
+			professor.setNivel(i);
+			professor.setTPreview(new Texture("images/Professor-preview.png"));
+			professor.setTChat(new Texture("images/Chat01.png"));
+			professor.setTextoChat("OLÁ TUDO BEM ? EU IREI ENSINA-LO AS VARIAVEIS BASICAS - MODULO I.");
+			professor.setInteracao(false);
+			professores.add(professor);
+		}
+	}
+
+	// Metodo para verificar se o Usuario esta Perto de algum Npc.
+	private void verificarNpc() {
+		for (Professor professor : professores) {
+			if ((player.b2body.getPosition().x >= professor.b2body.getPosition().x - 50)
+					&& (player.b2body.getPosition().x <= (professor.b2body.getPosition().x + 50))) {
+				// System.out.println(professor.getNome());
+				int NivelPlayer = 1;
+				if (NivelPlayer >= professor.getNivel()) {
+					// System.out.println("VOCÊ TEM ACESSO A ESSE NPC!");
+					professor.setInteracao(true);
+
+				} else {
+					professor.setInteracao(false);
+					// System.out.println("VOCÊ NÃO TEM ACESSO A ESSE NPC!");
+				}
+			} else {
+				professor.setInteracao(false);
+			}
+		}
+	}
+
+	private void criarEnsinos() {
+		int[] ids = { 1, 2, 3 };
+		String[] texto = { "TEXTO DO NPC 01", "TEXTO DO NPC 02", "TEXTO DO NPC 03" };
+		Screen[] tela = { new ScreenUs03(game), new ScreenUs05(game), new ScreenUs07(game) };
+		for (int i = 0; i < ids.length; i++) {
+			EnsinoTeorico teorico = new EnsinoTeorico(game);
+			teorico.setId(i);
+			teorico.setTexto(texto[i]);
+			teorico.setNpc_id(ids[i]);
+			teorico.setScreen(tela[i]);
+			ensinoTeorico.add(teorico);
+		}
+	}
     
 }
