@@ -19,8 +19,9 @@ public class Ranking implements Screen {
 	 //variaveis basicas da PlayScreen
     private OrthographicCamera gameCam;
     private Viewport gamePort;
-    
-	public Ranking(DevBilac game){
+    private int fase;
+	public Ranking(DevBilac game,int fase){
+		this.fase = fase;
 		hud = new HudRanking(game.batch); // Chama o HudRanking que é um 'Display' na tela, onde ficas Labels.
 		this.game = game;
 		gameCam = new OrthographicCamera();

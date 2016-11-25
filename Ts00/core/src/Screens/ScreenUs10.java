@@ -17,20 +17,26 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
-import Sprites.Player;
+import Sprites.PlayerUs10;
 
 
 public class ScreenUs10 implements Screen {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera,gamecam;
-	private Player player;
+	private PlayerUs10 player;
 	private TextureAtlas playerAtlas;
 	private ShapeRenderer sr;
 	private Array<StaticTiledMapTile> frameTiles;
 	private TextureAtlas atlas;
 	private DevBilac game; 
 	private Viewport gamePort;
+	
+	public ScreenUs10(DevBilac game){
+		this.game = game;
+	}
+	
+	
 	@Override
 	public void show() {
 		map = new TmxMapLoader().load("mapas/fase_vetores_matrizes.tmx");

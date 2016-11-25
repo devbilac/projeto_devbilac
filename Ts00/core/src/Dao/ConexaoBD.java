@@ -16,7 +16,13 @@ public class ConexaoBD {
     
     public Connection getConexao(){
         Connection con = null;
-        
+        /*
+        String BD = "centraln_bilac";
+        String usuario = "centraln_devb";
+        String senha = "bilac123";
+        String URL = "jdbc:mysql://177.234.151.98:3306/"+BD;
+        String driver = "com.mysql.jdbc.Driver";
+         */
         String BD = "DevBilac";
         String usuario = "root";
         String senha = "";

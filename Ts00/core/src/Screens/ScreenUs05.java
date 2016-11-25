@@ -3,6 +3,7 @@ package Screens;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
+import Dao.RankingDao;
 import Scenes.HudUs05;
 import Tools.Botao;
 import Tools.Visor;
@@ -71,10 +73,13 @@ public class ScreenUs05 implements Screen {
 	
 	public void handleInput(float delta){
 		acionarTeclado();
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new PlayScreen(game));
+        }
 	}
 
 
-	public void update(float delta){
+	public void update(float delta) throws Exception{
 		hud.update(delta);
 		//Bloquear
 		if(!acabouJogo()){
@@ -82,12 +87,23 @@ public class ScreenUs05 implements Screen {
 			verificaResposta();
 			verificaClick();
 			mouseOver();
+		}else{
+			RankingDao ranking = new RankingDao();
+			Conexao_BD Banco= new Conexao_BD();
+			Banco.addRanking(DevBilac.RA,05,hud.getScore());
+			game.setScreen(new Ranking(game,05));
+			dispose();
 		}
 	}
 
 	@Override
 	public void render(float delta) {		
-		update(delta);
+		try {
+			update(delta);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

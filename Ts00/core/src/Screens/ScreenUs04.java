@@ -76,7 +76,7 @@ public class ScreenUs04 implements Screen {
         world = new World(new Vector2(0,-10), true);
         
         //Debugando os Box2D para ver as linhas
-        //b2dr = new Box2DDebugRenderer();
+        b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreatorUs04(this);
 
@@ -109,6 +109,9 @@ public class ScreenUs04 implements Screen {
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >=-1.2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new PlayScreen(game));
+        }
     }
 
     public void update(float dt){
@@ -140,6 +143,7 @@ public class ScreenUs04 implements Screen {
         
         //Dizer ao nosso renderizador para desenhar apenas o que a nossa camera pode ver em nosso mundo de jogo.
         renderer.setView(gameCam);
+        
     }
 
     @Override
@@ -150,7 +154,7 @@ public class ScreenUs04 implements Screen {
 
         renderer.render();
 
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();

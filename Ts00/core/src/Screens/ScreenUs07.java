@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
+import Dao.RankingDao;
 import Scenes.HudUs07;
 import Sprites.BarraLateral;
 import Sprites.Botao;
@@ -116,8 +118,11 @@ public class ScreenUs07 implements Screen {
 
 	public void handleInput(float delta){
 		BarraAcao();
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new PlayScreen(game));
+        }
 	}
-	public void update(float delta){
+	public void update(float delta) throws Exception{
 		handleInput(delta);
 		
 		if(jogoPausado == false){
@@ -151,6 +156,11 @@ public class ScreenUs07 implements Screen {
 					circulos.remove(circulos.get(i));
 			}
 			System.out.println("JOGO ACABOU, CIRCULOS REMOVIDOS");
+			RankingDao ranking = new RankingDao();
+			Conexao_BD Banco= new Conexao_BD();
+			Banco.addRanking(DevBilac.RA,07,hud.getScore());
+			game.setScreen(new Ranking(game,07));
+			dispose();
 		}
 		
 		
@@ -162,7 +172,12 @@ public class ScreenUs07 implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		update(delta);
+		try {
+			update(delta);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		hud.stage.draw(); 

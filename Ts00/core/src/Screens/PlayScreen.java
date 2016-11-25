@@ -155,7 +155,7 @@ public class PlayScreen implements Screen {
         }
         //Atualiza a camera do jogo conforme ele muda
         gameCam.update();
-        
+        verificarNpc();
         //Dizer ao nosso renderizador para desenhar apenas o que a nossa camera pode ver em nosso mundo de jogo.
         renderer.setView(gameCam);
     }
@@ -195,8 +195,8 @@ public class PlayScreen implements Screen {
 					// Conversando
 					// Exibir conteudo na tela.;
 					// System.out.println("ESTOU CONVERSANDO COM O NPC!!!");
-					game.setScreen(ensinoTeorico.get(professor.getId()).getTela());
-					this.dispose();
+					game.setScreen(ensinoTeorico.get(professor.getId()).getScreen());
+					//this.dispose();
 				}
 
 			}
@@ -246,7 +246,6 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
-		manager.dispose();
     }
 
     public Hud getHud(){ return hud;}
@@ -270,7 +269,7 @@ public class PlayScreen implements Screen {
 			Professor professor = new Professor(this, position[i].x, position[i].y);
 			professor.setId(i);
 			professor.setNome(nomes[i]);
-			professor.setNivel(i);
+			professor.setNivel(0);
 			professor.setTPreview(new Texture("images/Professor-preview.png"));
 			professor.setTChat(new Texture("images/Chat01.png"));
 			professor.setTextoChat("OLÁ TUDO BEM ? EU IREI ENSINA-LO AS VARIAVEIS BASICAS - MODULO I.");
@@ -282,17 +281,17 @@ public class PlayScreen implements Screen {
 	// Metodo para verificar se o Usuario esta Perto de algum Npc.
 	private void verificarNpc() {
 		for (Professor professor : professores) {
-			if ((player.b2body.getPosition().x >= professor.b2body.getPosition().x - 50)
-					&& (player.b2body.getPosition().x <= (professor.b2body.getPosition().x + 50))) {
+			if ((player.b2body.getPosition().x >= professor.b2body.getPosition().x - 0.4)
+					&& (player.b2body.getPosition().x <= (professor.b2body.getPosition().x +0.4))) {
 				// System.out.println(professor.getNome());
 				int NivelPlayer = 1;
 				if (NivelPlayer >= professor.getNivel()) {
-					// System.out.println("VOCÊ TEM ACESSO A ESSE NPC!");
+					System.out.println("VOCÊ TEM ACESSO A ESSE NPC!");
 					professor.setInteracao(true);
 
 				} else {
 					professor.setInteracao(false);
-					// System.out.println("VOCÊ NÃO TEM ACESSO A ESSE NPC!");
+					System.out.println("VOCÊ NÃO TEM ACESSO A ESSE NPC!");
 				}
 			} else {
 				professor.setInteracao(false);
@@ -301,9 +300,9 @@ public class PlayScreen implements Screen {
 	}
 
 	private void criarEnsinos() {
-		int[] ids = { 1, 2, 3 };
-		String[] texto = { "TEXTO DO NPC 01", "TEXTO DO NPC 02", "TEXTO DO NPC 03" };
-		Screen[] tela = { new ScreenUs03(game), new ScreenUs05(game), new ScreenUs07(game) };
+		int[] ids = { 1, 2, 3, 4, 5 };
+		String[] texto = { "TEXTO DO NPC 01", "TEXTO DO NPC 02", "TEXTO DO NPC 03" , "TEXTO DO NPC 04" , "TEXTO DO NPC 05" };
+		Screen[] tela = { new ScreenUs03(game), new ScreenUs04(game), new ScreenUs05(game), new ScreenUs07(game), new ScreenUs10(game) };
 		for (int i = 0; i < ids.length; i++) {
 			EnsinoTeorico teorico = new EnsinoTeorico(game);
 			teorico.setId(i);

@@ -44,6 +44,10 @@ public class EnsinoTeorico {
 	public void setScreen(Screen screen) {
 		this.screen = screen;
 	}
+
+	public Screen getScreen() {
+		return screen;
+	}
 	
 	
 }

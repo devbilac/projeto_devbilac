@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -53,7 +54,7 @@ public class ScreenUs03 implements Screen {
 		batch = new SpriteBatch();
 		// Chama o HudRanking que é um 'Display' na tela, onde ficas Labels.
 		hud = new HudUs03(game.batch); 
-		hud.setTimer(6); //Envia o Tempo que o jogo tera para o Display.
+		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		//o 'Metodo' FitViewport faz o redimencionamento de tela.
@@ -73,7 +74,9 @@ public class ScreenUs03 implements Screen {
 	public void handleInput(float dt){
 	
 	clicou();
-		
+	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        game.setScreen(new PlayScreen(game));
+    }
 	}
 	
 	@Override
@@ -122,8 +125,7 @@ public class ScreenUs03 implements Screen {
 			RankingDao ranking = new RankingDao();
 			Conexao_BD Banco= new Conexao_BD();
 			Banco.addRanking(DevBilac.RA,03,hud.getScore());
-			//ranking.addDado(DevBilac.RA,03,hud.getScore());
-			game.setScreen(new Ranking(game));
+			game.setScreen(new Ranking(game,03));
 			dispose();
 			
 		}

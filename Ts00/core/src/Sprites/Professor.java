@@ -3,6 +3,7 @@ package Sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -24,6 +25,8 @@ public class Professor extends Npc {
 	private String TextoChat;
 	private BitmapFont font;
 	private boolean interacao;
+
+    private TextureAtlas atlas;
 	
 	
 	public String getNome() {
@@ -47,8 +50,9 @@ public class Professor extends Npc {
 		
 		 Array<TextureRegion> frames = new Array<TextureRegion>();
 	        //Animacao do boneco quando se move
+	        atlas = new TextureAtlas("professor.pack");
 	        for(int i = 1; i < 8; i++)
-	        	frames.add(new TextureRegion(screen.getAtlas().findRegion("left"), i*88, 91, 80, 80));
+	        	frames.add(new TextureRegion(atlas.findRegion("left"), 0, 0, 80, 80));
 	        walkAnimation = new Animation(0.5f, frames);
 	        frames.clear();
 
