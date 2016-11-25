@@ -22,21 +22,21 @@ public class Hud implements Disposable {
 	public Stage stage;
 	private Viewport viewport;
 	
-	private Integer worldTimer;
+	private String nome;
 	private float timeCount;
-	private Integer score;
+	private Integer ra;
 	
-	Label countdownLabel;
-	Label scoreLabel;
-	Label timeLabel;
+	Label NomeValor;
+	Label RAValor;
+	Label NomeTitulo;
 	Label levelLabel;
 	Label worldLabel;
-	Label marioLabel;
+	Label RATitulo;
 	
 	public Hud(SpriteBatch sb){
-		worldTimer = 300;
+		nome = "";
+		ra = DevBilac.RA;
 		timeCount = 0;
-		score = 0;
 		
 		//Camera do jogo.
 		viewport = new FitViewport(DevBilac.V_WIDTH,DevBilac.V_HEIGHT,new OrthographicCamera());
@@ -45,21 +45,26 @@ public class Hud implements Disposable {
 		table.top();
 		table.setFillParent(true);
 		
-		countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		table.add(marioLabel).expandX().padTop(10);
+		NomeValor = new Label(nome, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		RAValor = new Label(String.format("%06d", ra), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		NomeTitulo = new Label("Nome", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		levelLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		worldLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		RATitulo = new Label("R.A.", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		table.add(RATitulo).expandX().padTop(10);
 		table.add(worldLabel).expandX().padTop(10);
-		table.add(timeLabel).expandX().padTop(10);
+		table.add(NomeTitulo).expandX().padTop(10);
 		table.row();
-		table.add(scoreLabel).expandX();
+		table.add(RAValor).expandX();
 		table.add(levelLabel).expandX();
-		table.add(countdownLabel).expandX();
+		table.add(NomeValor).expandX();
 		stage.addActor(table);
 		
 	
+	}
+
+	public void update(float dt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

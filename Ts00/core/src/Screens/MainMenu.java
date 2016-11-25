@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.DevBilac;
+
 import aurelienribon.tweenengine.TweenManager;
 
 public class MainMenu implements Screen {
@@ -25,7 +27,10 @@ public class MainMenu implements Screen {
 	private BitmapFont white,black,black32;
 	private TextureAtlas atlas ;
 	private TweenManager tweenManager;
-
+	private DevBilac game;
+	public MainMenu(DevBilac game){
+		this.game = game;
+	}
 	@Override
 	public void show() {
 		stage=new Stage();
@@ -51,16 +56,16 @@ public class MainMenu implements Screen {
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event,float x ,float y){  //evento do botão Novo Jogo 
-				((Game)Gdx.app.getApplicationListener()).setScreen(new Login());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Login(game));
 			}
 			
 		});
 		buttonPlay.pad(15);
-		buttonContinueGame= new  TextButton("Novo Jogo",skin);
+		buttonContinueGame= new  TextButton("Jogar",skin);
 		buttonContinueGame.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event,float x ,float y){  //evento do botão Sair
-				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelMenu());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new PlayScreen(game));
 			}
 		});
 		buttonContinueGame.pad(15);

@@ -2,7 +2,6 @@ package Screens;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import java.sql.Connection;
 
 /**
  *
@@ -46,6 +45,26 @@ public class Conexao_BD {
         
      }
      
+     public void addRanking(int ra,int fase,int pontuacao) throws Exception{
+     	try{         // Estrutura para inserção de dados
+    		 
+     		Conexao_BD conexao = new Conexao_BD();
+			 conexao.getConexao();
+    		 
+               String sql= "INSERT INTO ranking (ra,fase,pontuacao) VALUES (?,?,?)";
+              
+    			PreparedStatement ps = Conexao_BD.connection.prepareStatement(sql);
+               ps.setInt(1,ra);
+               ps.setInt(2,fase);
+               ps.setInt(3,pontuacao);
+              
+              
+               ps.executeUpdate();
+       }                                               
+          catch(SQLException erro ){
+        	  System.out.println(erro);
+          }
+     }
      
      public void Fechar_Conexao() throws Exception{ ////Método que para encerrar conexão com o banco de dados
        

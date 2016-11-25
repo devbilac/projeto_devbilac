@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.DevBilac;
 
 public class LevelMenu implements Screen {	
 	private Stage stage ;
@@ -25,7 +26,10 @@ public class LevelMenu implements Screen {
 	private ScrollPane scrollPane;
 	private TextButton jogar , voltar;
 	private ArrayList fase,Fases;
-
+	private DevBilac game;
+	public LevelMenu(DevBilac game){
+		this.game = game;
+	}
 	@Override
 	public void show() {
 		stage =new Stage ();
@@ -50,7 +54,7 @@ public class LevelMenu implements Screen {
 		voltar.addListener(new ClickListener(){
 			@Override
 			public void clicked (InputEvent event, float x,float y){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
 			}
 		});
 		voltar.pad(5);

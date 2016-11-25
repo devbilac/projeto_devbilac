@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.DevBilac;
+
 import Tools.SpriteAcessor;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -18,19 +20,24 @@ public class Splash implements Screen {
 private Sprite splash;
 private SpriteBatch batch;
 private TweenManager tweenManager;
+private DevBilac game;
+public Splash(DevBilac game){
+	this.game = game;
+}
+
 	@Override
 	public void show() {
 		batch = new SpriteBatch();
 		tweenManager =new TweenManager();
 		Tween.registerAccessor(Sprite.class,new SpriteAcessor());
-		Texture splashTexture = new Texture(Gdx.files.internal("img/img4.png"));
+		Texture splashTexture = new Texture(Gdx.files.internal("Logo.jpeg"));
 		splash = new Sprite(splashTexture);
 		splash.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		Tween.set(splash,SpriteAcessor.ALPHA).target(0).start(tweenManager);
 		Tween.to(splash,SpriteAcessor.ALPHA,2).target(1).repeatYoyo(1,2).setCallback(new TweenCallback(){
 			@Override
 			public void onEvent (int type,BaseTween<?>source){
-				((Game)Gdx.app.getApplicationListener()).setScreen(new Login());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Login(game));
 				
 			}
 		}).start(tweenManager);

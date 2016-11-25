@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.DevBilac;
 import Screens.ScreenUs04;
 import Sprites.Chest;
-import Sprites.Coin;
 import Sprites.Porta;
 import Sprites.Traps;
 
@@ -32,7 +31,6 @@ public class B2WorldCreatorUs04 {
         //Moedas
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(screen, rect);
         }
 
         //Corpo chao

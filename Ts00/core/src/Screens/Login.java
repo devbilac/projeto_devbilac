@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.DevBilac;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +33,10 @@ public class Login implements Screen{
 	private TextField  txfpassword,txfra;
 	private OrthographicCamera camera;
 	Conexao_BD  conexao;
+	private DevBilac game;
+	public Login(DevBilac game){
+		this.game = game;
+	}
 	@Override
 	public void show() {
 		stage =new Stage();
@@ -79,7 +85,7 @@ public class Login implements Screen{
 			            if (rs.next()) {
 			                rs.getString("ra");
 			                rs.getString("senha");
-			                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu()); 
+			                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game)); 
 			                
 			            } else {
 			            	 btnlogar.setText("Acesso Negado !" );
@@ -108,7 +114,7 @@ public class Login implements Screen{
 			@Override
 			@SuppressWarnings("static-access")
 			public void clicked(InputEvent event,float x ,float y){ 
-				((Game)Gdx.app.getApplicationListener()).setScreen(new CriarConta());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new CriarConta(game));
 				
 			}});
 		

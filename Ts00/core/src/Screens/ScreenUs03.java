@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
+import Dao.ConexaoBD;
+import Dao.RankingDao;
 import Scenes.HudUs03;
 import Sprites.Objeto;
 import Sprites.Recipiente;
@@ -51,7 +53,7 @@ public class ScreenUs03 implements Screen {
 		batch = new SpriteBatch();
 		// Chama o HudRanking que é um 'Display' na tela, onde ficas Labels.
 		hud = new HudUs03(game.batch); 
-		hud.setTimer(60); //Envia o Tempo que o jogo tera para o Display.
+		hud.setTimer(6); //Envia o Tempo que o jogo tera para o Display.
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		//o 'Metodo' FitViewport faz o redimencionamento de tela.
@@ -76,7 +78,12 @@ public class ScreenUs03 implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		update(delta);
+		try {
+			update(delta);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//Desenha o Display na Tela.
@@ -101,7 +108,7 @@ public class ScreenUs03 implements Screen {
 		
 	}
 	
-	private void update(float delta) {
+	private void update(float delta) throws Exception {
 		handleInput(delta);
 		gamecam.position.x = DevBilac.V_WIDTH / 2; //Camera no centro da Tela.
 		gamecam.update();
@@ -112,6 +119,13 @@ public class ScreenUs03 implements Screen {
 		if(acabouJogo()){
 			System.out.println("ACABO");
 			System.out.println("Pontos: "+hud.getScore());
+			RankingDao ranking = new RankingDao();
+			Conexao_BD Banco= new Conexao_BD();
+			Banco.addRanking(DevBilac.RA,03,hud.getScore());
+			//ranking.addDado(DevBilac.RA,03,hud.getScore());
+			game.setScreen(new Ranking(game));
+			dispose();
+			
 		}
 	}
 	

@@ -1,6 +1,14 @@
 package Dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+
+import Screens.Conexao_BD;
+import Screens.MainMenu;
 
 
 //Conexão com o Banco de Dados
@@ -23,5 +31,7 @@ public class ConexaoBD {
         }catch(Exception e){}
           return con;
     }
+    
+
 
 }

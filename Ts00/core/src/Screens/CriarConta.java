@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.DevBilac;
+
 import Screens.Conexao_BD;
 import java.sql.PreparedStatement;  
 
@@ -32,7 +34,10 @@ public class CriarConta implements Screen {
 	private Label heading;
 	Conexao_BD  conexao;
 	 
-	
+	private DevBilac game;
+	public CriarConta(DevBilac game){
+		this.game = game;
+	}
 	@Override
 	public void show() {
 		stage =new Stage();
@@ -90,7 +95,7 @@ public class CriarConta implements Screen {
 			            ps.executeUpdate();
 			           
 			         btngravar.setText(" Cadastrado !");
-			         ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+			         ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
 			    }                                               
 			       catch(SQLException erro  ){
 			    	   btngravar.setText(""+erro);

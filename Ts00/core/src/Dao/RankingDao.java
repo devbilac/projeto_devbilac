@@ -15,7 +15,7 @@ public class RankingDao implements Serializable{
     ArrayList<Ranking> dado = new ArrayList<Ranking>();
     
     //Classe que cria um objeto do Tipo <Ranking> e adiciona 3 Valores e depois adiciona em uma lista os objetos <Ranking>.
-    protected void addDado(int a,int b,int c){
+    public void addDado(int a,int b,int c){
 	  	Ranking user = new Ranking();
 	  	user.setRa(a);
 	  	user.setFase(b);
