@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import Screens.CriarConta;
+import Screens.ScreenUs04;
 
 public class DevBilac extends Game {
 	public static final int V_WIDTH = 400;
@@ -30,8 +31,8 @@ public class DevBilac extends Game {
 		//setScreen(new ScreenUs03(this));
 		//setScreen(new ScreenUs07(this));
 		//setScreen(new ScreenUs05(this));
-		//setScreen(new ScreenUs04(this));
-		setScreen(new CriarConta());
+		setScreen(new ScreenUs04(this));
+		//setScreen(new CriarConta());
 		//setScreen(new MainMenu());
 		//setScreen(new MenuScreen());
 		manager = new AssetManager();

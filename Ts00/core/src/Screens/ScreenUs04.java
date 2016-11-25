@@ -3,7 +3,9 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -48,7 +50,8 @@ public class ScreenUs04 implements Screen {
     private Music music;
     
     static int check = 0;
-
+    //
+	public static AssetManager manager;
     public ScreenUs04(DevBilac game){
         atlas = new TextureAtlas("Devb.pack");
 
@@ -81,7 +84,7 @@ public class ScreenUs04 implements Screen {
         player = new Devb(this);
 
         world.setContactListener(new WorldContactListener());
-        
+
        /* music = DevBilac.manager.get("audio/music/Fluxogame.ogg", Music.class);
         music.setLooping(true);
         music.play();*/
@@ -119,9 +122,19 @@ public class ScreenUs04 implements Screen {
         hud.update(dt);
 
         //Anexando a camera do jogo ao jogador na coordenada x e y
-        gameCam.position.x = player.b2body.getPosition().x;
-        gameCam.position.y = player.b2body.getPosition().y;
-
+        System.out.println(player.b2body.getPosition().x);
+        if(player.b2body.getPosition().x <2){
+            gameCam.position.x = 2;
+        }else if(player.b2body.getPosition().x >36.4){
+                gameCam.position.x = (float)36.4;
+        }else{
+            gameCam.position.x = player.b2body.getPosition().x;
+        }
+        if(player.b2body.getPosition().y <1.05){
+            gameCam.position.y = (float) 1.05;
+        }else{
+            gameCam.position.y = player.b2body.getPosition().y;
+        }
         //Atualiza a camera do jogo conforme ele muda
         gameCam.update();
         
@@ -190,6 +203,7 @@ public class ScreenUs04 implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+		manager.dispose();
     }
 
     public HudUs04 getHud(){ return hud;}
