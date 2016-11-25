@@ -3,34 +3,24 @@ package Screens;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.Hud;
-import Sprites.Circulo;
 import Sprites.EnsinoTeorico;
 import Sprites.Player;
 import Sprites.Professor;
@@ -235,8 +225,8 @@ public class PlayScreen implements Screen {
 
 	public void criarProfessor() {
 		String[] nomes = { "Angela", "André", "Gerson" };
-		Vector2[] position = { new Vector2(20, (float) 21), new Vector2(200, (float) 21),
-				new Vector2(400, (float) 21) };
+		Vector2[] position = { new Vector2(20, 21), new Vector2(200, 21),
+				new Vector2(400, 21) };
 		for (int i = 0; i < nomes.length; i++) {
 			Professor professor = new Professor(this, position[i].x, position[i].y);
 			professor.setId(i);

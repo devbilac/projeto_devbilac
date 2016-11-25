@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.DevBilac;
 
 import Scenes.HudUs05;
-import Scenes.HudUs07;
 import Tools.Botao;
 import Tools.Visor;
 
@@ -322,7 +321,7 @@ public class ScreenUs05 implements Screen {
 	
 	private boolean inteiro(double num) {
 		int aux = (int)num;
-		return (((double)aux) == num);
+		return ((aux) == num);
 	}
 	
 	public void verificaResposta(){

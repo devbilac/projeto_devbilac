@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.*;
-import java.sql.*;
-import com.mysql.jdbc.PreparedStatement;
 import javax.swing.JOptionPane;
 import Model.Ranking;
 
@@ -43,7 +39,8 @@ public class RankingDao implements Serializable{
 	public ArrayList<Ranking> getDado(){
     	//Codigo ordenador do maior para o Menor
     	Collections.sort (dado, new Comparator() {
-	        public int compare(Object o1, Object o2) {
+	        @Override
+			public int compare(Object o1, Object o2) {
 	            Ranking p1 = (Ranking) o1;
 	            Ranking p2 = (Ranking) o2;
 	            return p1.pontuacao > p2.pontuacao ? -1 : (p1.pontuacao < p2.pontuacao ? +1 : 0);

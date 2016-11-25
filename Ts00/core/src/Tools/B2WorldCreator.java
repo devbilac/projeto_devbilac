@@ -13,7 +13,6 @@ import com.mygdx.game.DevBilac;
 
 import Screens.PlayScreen;
 import Sprites.Brick;
-import Sprites.Coin;
 
 public class B2WorldCreator {
 	//Classe que verifica Colisão com os Objetos do mapa, assim impedindo o Usuario de colidir com alguns objetos.

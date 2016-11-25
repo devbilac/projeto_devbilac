@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.DevBilac;
 
-import Dao.ConexaoAE;
 import Scenes.HudRanking;
 
 public class Ranking implements Screen {

@@ -22,7 +22,6 @@ import Scenes.HudUs07;
 import Sprites.BarraLateral;
 import Sprites.Botao;
 import Sprites.Circulo;
-import Tools.B2WorldCreator;
 
 //Tela destinada ao Jogo da User Story 07.
 public class ScreenUs07 implements Screen {

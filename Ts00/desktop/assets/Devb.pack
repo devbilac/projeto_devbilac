@@ -1,0 +1,40 @@
+
+devb1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+left
+  rotate: false
+  xy: 2, 2
+  size: 807, 89
+  orig: 807, 89
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 2, 93
+  size: 807, 82
+  orig: 807, 82
+  offset: 0, 0
+  index: -1
+upscad
+  rotate: false
+  xy: 2, 177
+  size: 764, 86
+  orig: 764, 86
+  offset: 0, 0
+  index: -1
+upright
+  rotate: false
+  xy: 2, 265
+  size: 589, 90
+  orig: 589, 90
+  offset: 0, 0
+  index: -1
+upleft
+  rotate: false
+  xy: 2, 357
+  size: 582, 93
+  orig: 582, 93
+  offset: 0, 0
+  index: -1
