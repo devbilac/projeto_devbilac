@@ -29,8 +29,8 @@ public class HudUs07 implements Disposable {
 	public Label countdownLabel;
 	Label scoreLabel;
 	Label timeLabel;
-	Label levelLabel;
 	Label worldLabel;
+	Label levelLabel;
 	Label pontosLabel;
 	
 	public int getScore() {
@@ -85,7 +85,7 @@ public class HudUs07 implements Disposable {
 		if(timeCount >= 1){
 			if(worldTimer > 0){
 				worldTimer--;
-				countdownLabel.setText(String.format("%02d", worldTimer));
+				System.out.println(worldTimer);
 				timeCount = 0;
 			}
 		}

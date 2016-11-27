@@ -196,6 +196,7 @@ public class PlayScreen implements Screen {
 					// Exibir conteudo na tela.;
 					// System.out.println("ESTOU CONVERSANDO COM O NPC!!!");
 					game.setScreen(ensinoTeorico.get(professor.getId()).getScreen());
+					music.dispose();
 					//this.dispose();
 				}
 

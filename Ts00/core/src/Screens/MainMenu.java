@@ -55,8 +55,8 @@ public class MainMenu implements Screen {
 		buttonPlay= new  TextButton("Recordes",skin);
 		buttonPlay.addListener(new ClickListener(){
 			@Override
-			public void clicked(InputEvent event,float x ,float y){  //evento do botão Novo Jogo 
-				((Game)Gdx.app.getApplicationListener()).setScreen(new Login(game));
+			public void clicked(InputEvent event,float x ,float y){  //evento do botão Novo Jogo
+                game.setScreen(new Ranking(game,00));
 			}
 			
 		});
@@ -65,7 +65,7 @@ public class MainMenu implements Screen {
 		buttonContinueGame.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event,float x ,float y){  //evento do botão Sair
-				((Game)Gdx.app.getApplicationListener()).setScreen(new PlayScreen(game));
+                game.setScreen(new PlayScreen(game));
 			}
 		});
 		buttonContinueGame.pad(15);

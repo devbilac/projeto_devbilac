@@ -39,9 +39,7 @@ public class Ranking implements Screen {
 	}
 	public void handleInput(float dt){
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
-				//Problema no Dispose();
-				//game.setScreen(new PlayScreen(game));
-				//dispose();
+				game.setScreen(new MainMenu(game));
         		System.out.println("Rank ESQ");
         }
 	}

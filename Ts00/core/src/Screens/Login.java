@@ -34,6 +34,7 @@ public class Login implements Screen{
 	private OrthographicCamera camera;
 	Conexao_BD  conexao;
 	private DevBilac game;
+	String msgLogin = "Login";
 	public Login(DevBilac game){
 		this.game = game;
 	}
@@ -85,17 +86,21 @@ public class Login implements Screen{
 			            if (rs.next()) {
 			                rs.getString("ra");
 			                rs.getString("senha");
-			                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game)); 
+			                game.setScreen(new MainMenu(game));
 			                
 			            } else {
-			            	 btnlogar.setText("Acesso Negado !" );
+			            	 System.out.println("Acesso Negado !" );
+			            	 msgLogin = "LOGIN - Senha Incorreta";
+			            	 //Mensagem não sendo exibida na Tabela de Labels;
 			            	 ps.close();
 			               
 			            }
 			        } catch (SQLException ex) {
-			           btnlogar.setText(""+ ex);
+			        	msgLogin = "LOGIN - Senha Incorreta";
+			        	System.out.println(""+ ex);
 			        } catch (Exception e) {
-			        	 btnlogar.setText(""+ e);
+			        	msgLogin = "LOGIN - Senha Incorreta";
+			        	System.out.println(""+ e);
 						e.printStackTrace();
 					}
 			        
@@ -113,8 +118,8 @@ public class Login implements Screen{
 			//public void touchUp(InputEvent e,float x,float y,int point,int button){
 			@Override
 			@SuppressWarnings("static-access")
-			public void clicked(InputEvent event,float x ,float y){ 
-				((Game)Gdx.app.getApplicationListener()).setScreen(new CriarConta(game));
+			public void clicked(InputEvent event,float x ,float y){
+                game.setScreen(new CriarConta(game));
 				
 			}});
 		
@@ -131,10 +136,11 @@ public class Login implements Screen{
 		});
 		
 		
-		
-		table.add(new Label("LOGIN", skin, "default")).colspan(3).expandX().spaceBottom(65).row();
+
+		table.add(new Label(msgLogin, skin, "default")).colspan(3).expandX().spaceBottom(0).row();
 		table.add(new Label("Digite seu RA:", skin, "default")).colspan(3).expandX().spaceBottom(65).row();
-		table.add(new Label("Digitar Senha:", skin, "default")).colspan(3).expandX().spaceBottom(55).row();
+		table.add(new Label("Digite sua Senha:", skin, "default")).colspan(1).expandX().spaceBottom(0).row();
+		table.add(new Label("", skin, "default")).colspan(1).expandX().spaceBottom(0).row();
 	//	table.add(new Label("Digitar Senha:", skin, "default")).colspan(3).expandX().row();
 		
 		stage.addActor(table); 

@@ -49,18 +49,18 @@ public class CriarConta implements Screen {
 		table.setFillParent(true);
 		
 		txfusername= new  TextField("",skin,"default");
-		txfusername.setPosition(500,330);
+		txfusername.setPosition(500,290);
 		txfusername.setSize(300,40);
 		
 		
 		txfra= new  TextField("",skin,"default");
-    	txfra.setPosition(500,240);
+    	txfra.setPosition(500,190);
 		txfra.setSize(300,40);
 		
 				
 		
 		txfpassword=new TextField(" ",skin,"default"); 
-		txfpassword.setPosition(500,150);
+		txfpassword.setPosition(500,100);
 		txfpassword.setSize(300,40);
 		txfpassword.setPasswordCharacter('*');
 		txfpassword.setText("");
@@ -68,9 +68,9 @@ public class CriarConta implements Screen {
 		
 		
 		
-		btngravar= new TextButton("Gravar",skin,"small"); 
+		btngravar= new TextButton("Criar",skin,"small"); 
 	    btngravar.setSize(130, 40);//170,40 size do btn
-		btngravar.setPosition(500,100);
+		btngravar.setPosition(500,50);
 		btngravar.addListener(new ClickListener(){//btnlogin 500,300 //password 500,200 //username 500 ,250
 			//public void touchUp(InputEvent e,float x,float y,int point,int button){
 			@Override
@@ -94,8 +94,8 @@ public class CriarConta implements Screen {
 			           
 			            ps.executeUpdate();
 			           
-			         btngravar.setText(" Cadastrado !");
-			         ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
+			         System.out.println(" Cadastrado !");
+		             game.setScreen(new Login(game));
 			    }                                               
 			       catch(SQLException erro  ){
 			    	   btngravar.setText(""+erro);
@@ -108,14 +108,13 @@ public class CriarConta implements Screen {
 		}
 		});
 		
-    	btnsair= new TextButton("Sair",skin,"small"); 
+    	btnsair= new TextButton("Voltar",skin,"small"); 
 		btnsair.setSize(130, 40);
-		btnsair.setPosition(670,100);
+		btnsair.setPosition(670,50);
 		btnsair.addListener(new ClickListener(){//btnlogin 500,300 //password 500,200 //username 500 ,250
 			@Override
 			public void touchUp(InputEvent e,float x,float y,int point,int button){
-			
-				Gdx.app.exit();
+	             game.setScreen(new Login(game));
 		}
 		});
 		
